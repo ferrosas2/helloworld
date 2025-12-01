@@ -4,13 +4,8 @@
 
 ### Architecture Diagram
 
-```mermaid
-graph LR
-    A[Document Storage<br/>(Amazon S3)] -->|Read Text| B[Processing Workflow]
-    B -->|Invoke| C[Foundation Model Integration<br/>(Amazon Bedrock)]
-    C -->|Return JSON/Text| B
-    B -->|Save Results| D[Response Generation]
-```
+![Architecture Diagram](skill_1_1_1.png)
+
 
 ### Amazon Bedrock Model Selection
 
@@ -98,3 +93,4 @@ The system was tested using a comparative batch processing approach:
 *   **Extraction Efficiency:** For the structured extraction task, Nova Micro was **2.5x faster** (avg ~0.49s vs ~1.21s) while maintaining valid JSON output.
 *   **Summarization:** Nova Micro generated summaries significantly faster (~1.7s vs ~5.1s), though Sonnet's summaries tended to be more verbose and linguistically nuanced.
 *   **Recommendation:** Switch to **Amazon Nova Micro** for the primary extraction and summarization pipeline to optimize for speed and cost, while retaining Claude 3 Sonnet for complex edge cases requiring deeper reasoning.
+
