@@ -2,7 +2,8 @@
 
 ## Step 1. Design the architecture (Skill 1.1.1)
 
-### Architecture Diagram
+### Architecture Diagrams
+![Architecture Diagram](./skill_1_1_1_full.png)
 
 ![Architecture Diagram](./skill_1_1_1.png)
 
@@ -93,5 +94,6 @@ The system was tested using a comparative batch processing approach:
 *   **Extraction Efficiency:** For the structured extraction task, Nova Micro was **2.5x faster** (avg ~0.49s vs ~1.21s) while maintaining valid JSON output.
 *   **Summarization:** Nova Micro generated summaries significantly faster (~1.7s vs ~5.1s), though Sonnet's summaries tended to be more verbose and linguistically nuanced.
 *   **Recommendation:** Switch to **Amazon Nova Micro** for the primary extraction and summarization pipeline to optimize for speed and cost, while retaining Claude 3 Sonnet for complex edge cases requiring deeper reasoning.
+
 
 
