@@ -1,0 +1,17 @@
+{
+  "s3_key": "bonus_1.1/claim2.txt",
+  "model": "nova-micro-v1",
+  "extracted_info": {
+    "claimant_name": "Anne Bray",
+    "policy_number": "POL-427191",
+    "incident_date": "2025-10-18",
+    "claim_amount": 7174.48,
+    "description": "I was driving on Brown Hollow when I was rear-ended. The bumper and trunk has significant damage. There were no injuries, but the car is not drivable."
+  },
+  "summary": "**Insurance Claim Summary**\n\n**Claim Overview:**\nThis claim is submitted by Anne Bray, policyholder under policy number POL-427191. The claim pertains to an incident that occurred on October 18, 2025, where the insured vehicle sustained significant damage.\n\n**Incident Details:**\nOn October 18, 2025, Anne Bray was driving on Brown Hollow when her vehicle was rear-ended. The collision resulted in substantial damage to the vehicle's bumper and trunk. Fortunately, there were no reported injuries to Ms. Bray. However, the damage has rendered the vehicle non-drivable.\n\n**Financial Impact:**\nThe total claim amount submitted is $7,174.48. This amount covers the cost of repairs necessary to restore the vehicle to its pre-incident condition. The claim includes the cost of labor and parts required for the repair.\n\n**Recommended Next Steps:**\n1. **Assessment and Documentation:** Arrange for a professional assessment of the vehicle to determine the exact extent of the damage and the cost of repairs.\n2. **Repair Estimates:** Obtain detailed repair estimates from authorized service providers.\n3. **Claim Submission:** Submit the repair estimates along with any relevant documentation, including photographs of the damage, the police report, and any other pertinent evidence.\n4. **Approval and Payment:** Once the claim is approved, arrange for the repairs to be carried out by an authorized service provider.\n5. **Follow-Up:** Ensure that the repairs are completed to satisfaction and follow up with the insurance company to confirm the claim has been processed and any remaining balance, if applicable, is settled.\n\nThis summary provides a clear and concise overview of the claim, detailing the incident, its financial impact, and the recommended steps to facilitate the claim process.",
+  "performance": {
+    "extraction_time": 0.42,
+    "summary_time": 1.8
+  },
+  "processed_at": "2025-11-30T18:09:28.282670"
+}
