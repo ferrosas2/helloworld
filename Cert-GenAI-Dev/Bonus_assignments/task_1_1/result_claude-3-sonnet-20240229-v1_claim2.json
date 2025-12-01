@@ -1,0 +1,17 @@
+{
+  "s3_key": "bonus_1.1/claim2.txt",
+  "model": "claude-3-sonnet-20240229-v1",
+  "extracted_info": {
+    "claimant_name": "Anne Bray",
+    "policy_number": "POL-427191",
+    "incident_date": "2025-10-18",
+    "claim_amount": 7174.48,
+    "description": "I was driving on Brown Hollow when I was rear-ended. The bumper and trunk has significant damage. There were no injuries, but the car is not drivable."
+  },
+  "summary": "Claim Summary\n\n1. Claim Overview:\nClaimant: Anne Bray\nPolicy Number: POL-427191\nClaim Type: Automobile Collision\nClaim Amount: $7,174.48\n\n2. Incident Details:\nDate of Incident: October 18, 2025\nLocation: Brown Hollow\nDescription: Ms. Bray was driving on Brown Hollow when her vehicle was rear-ended by another vehicle. The impact caused significant damage to the rear bumper and trunk area of her car, rendering it undrivable. No injuries were reported.\n\n3. Financial Impact:\nThe estimated cost of repairs for Ms. Bray's vehicle is $7,174.48. This amount covers the replacement of the damaged rear bumper, trunk, and any additional repairs required to restore the vehicle to its pre-incident condition.\n\n4. Recommended Next Steps:\n- Initiate the claims process by contacting the insurance company's claims department and providing the necessary details, including the policy number, incident date, and a detailed description of the damages.\n- Obtain at least two repair estimates from reputable auto body shops to ensure the claim amount accurately reflects the cost of repairs.\n- Provide any supporting documentation, such as photographs of the damage, police reports (if applicable), and witness statements.\n- Discuss the claims process and timeline with the assigned claims adjuster to ensure a smooth and efficient resolution.\n- Once the claim is approved, schedule the necessary repairs with the chosen auto body shop and provide them with the claim information and authorization from the insurance company.\n- Keep all receipts and documentation related to the repairs for future reference.\n\nPlease note that this summary is based on the information provided, and additional details or documentation may be required by the insurance company to process the claim fully.",
+  "performance": {
+    "extraction_time": 1.18,
+    "summary_time": 5.51
+  },
+  "processed_at": "2025-11-30T18:09:23.559024"
+}

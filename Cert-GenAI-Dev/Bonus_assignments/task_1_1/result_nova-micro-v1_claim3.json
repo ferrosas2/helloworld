@@ -1,0 +1,17 @@
+{
+  "s3_key": "bonus_1.1/claim3.txt",
+  "model": "nova-micro-v1",
+  "extracted_info": {
+    "claimant_name": "Brandy Scott",
+    "policy_number": "POL-251593",
+    "incident_date": "2025-09-19",
+    "claim_amount": 12561.23,
+    "description": "I was driving on James Plains when I was backed into a pole. The rear taillight and fender has significant damage. There were no injuries, but the car is not drivable."
+  },
+  "summary": "**Insurance Claim Summary**\n\n**Claim Overview:**\nThis claim is submitted by Brandy Scott, policyholder under the policy number POL-251593, for an incident that occurred on September 19, 2025. The total claim amount is $12,561.23.\n\n**Incident Details:**\nOn the date of the incident, Brandy Scott was driving on James Plains when she was backed into a pole. The collision resulted in significant damage to the rear taillight and fender of the vehicle. Fortunately, there were no injuries reported, but the car is currently not drivable.\n\n**Financial Impact:**\nThe financial impact of this incident is substantial, with the total claim amount amounting to $12,561.23. This figure covers the repair costs for the damaged rear taillight and fender, which are essential for the vehicle's functionality and safety.\n\n**Recommended Next Steps:**\n1. **Assessment:** Arrange for a thorough assessment of the vehicle by a certified mechanic or body shop to determine the precise extent of the repairs needed.\n2. **Estimates:** Obtain detailed repair estimates from at least two reputable repair shops to ensure the most accurate and fair pricing.\n3. **Documentation:** Gather all necessary documentation, including the police report (if available), photographs of the damage, and any repair estimates.\n4. **Approval:** Submit the documentation to the insurance company for review and approval of the claim.\n5. **Repairs:** Once the claim is approved, schedule and complete the necessary repairs to restore the vehicle to its pre-incident condition.\n\nShould you have any questions or require further assistance, please do not hesitate to contact our office.\n\n---\n\nThis summary provides a clear and comprehensive overview of the claim, detailing the incident, its financial implications, and the recommended steps to facilitate the claims process.",
+  "performance": {
+    "extraction_time": 0.5,
+    "summary_time": 1.52
+  },
+  "processed_at": "2025-11-30T18:09:39.757186"
+}
