@@ -1,0 +1,21 @@
+
+INSURANCE CLAIM SUBMISSION FORM
+===============================
+
+CLAIMANT DETAILS
+----------------
+Full Name: Ian Lynn
+Policy Number: POL-630821
+
+INCIDENT INFORMATION
+--------------------
+Date of Incident: 2025-09-22
+Estimated Repair Cost (Claim Amount): $9,099.70
+
+DESCRIPTION OF INCIDENT
+-----------------------
+I was driving on Murphy Ville when I was backed into a pole. The rear taillight and fender has significant damage. There were no injuries, but the car is not drivable.
+
+-----------------------
+End of Document
+    
