@@ -1,0 +1,21 @@
+
+INSURANCE CLAIM SUBMISSION FORM
+===============================
+
+CLAIMANT DETAILS
+----------------
+Full Name: Anne Bray
+Policy Number: POL-427191
+
+INCIDENT INFORMATION
+--------------------
+Date of Incident: 2025-10-18
+Estimated Repair Cost (Claim Amount): $7,174.48
+
+DESCRIPTION OF INCIDENT
+-----------------------
+I was driving on Brown Hollow when I was rear-ended. The bumper and trunk has significant damage. There were no injuries, but the car is not drivable.
+
+-----------------------
+End of Document
+    

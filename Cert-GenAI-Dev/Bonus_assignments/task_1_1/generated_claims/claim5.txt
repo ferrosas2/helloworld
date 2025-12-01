@@ -1,0 +1,21 @@
+
+INSURANCE CLAIM SUBMISSION FORM
+===============================
+
+CLAIMANT DETAILS
+----------------
+Full Name: Howard Blackwell
+Policy Number: POL-232860
+
+INCIDENT INFORMATION
+--------------------
+Date of Incident: 2025-07-01
+Estimated Repair Cost (Claim Amount): $6,924.96
+
+DESCRIPTION OF INCIDENT
+-----------------------
+I was driving on Kim Throughway when I was side-swiped. The driver side door and mirror has significant damage. There were no injuries, but the car is not drivable.
+
+-----------------------
+End of Document
+    
