@@ -1,0 +1,17 @@
+{
+  "s3_key": "bonus_1.1/claim4.txt",
+  "model": "claude-3-sonnet-20240229-v1",
+  "extracted_info": {
+    "claimant_name": "Christopher Aguirre",
+    "policy_number": "POL-480339",
+    "incident_date": "2025-06-30",
+    "claim_amount": 8012.31,
+    "description": "I was driving on Joshua Rue when I was rear-ended. The bumper and trunk has significant damage. There were no injuries, but the car is not drivable."
+  },
+  "summary": "Claim Summary\n\n1. Claim Overview:\nClaimant: Christopher Aguirre\nPolicy Number: POL-480339\nClaim Type: Automobile Collision\nClaim Amount: $8,012.31\n\n2. Incident Details:\nDate of Incident: June 30, 2025\nLocation: Joshua Rue\nDescription: Mr. Aguirre was driving on Joshua Rue when his vehicle was rear-ended by another vehicle. The impact caused significant damage to the rear bumper and trunk area of Mr. Aguirre's vehicle, rendering it undrivable. No injuries were reported.\n\n3. Financial Impact:\nThe estimated cost of repairs for Mr. Aguirre's vehicle is $8,012.31. This amount covers the replacement of the damaged rear bumper, trunk, and any additional repairs required to restore the vehicle to its pre-incident condition.\n\n4. Recommended Next Steps:\n- Initiate the claims process by assigning an adjuster to investigate the incident and assess the damage.\n- Obtain repair estimates from authorized repair facilities to validate the claimed amount.\n- Coordinate with Mr. Aguirre to arrange for towing and temporary rental car services, if applicable.\n- Determine liability and subrogation potential based on the investigation findings.\n- Process the claim and issue payment for the approved repair costs, subject to policy terms and conditions.\n- Maintain open communication with Mr. Aguirre throughout the claims process to ensure a smooth and timely resolution.\n\nPlease note that this summary is based on the provided claim information and may require further investigation or clarification as needed.",
+  "performance": {
+    "extraction_time": 2.73,
+    "summary_time": 9.77
+  },
+  "processed_at": "2025-12-02T11:23:15.812974"
+}

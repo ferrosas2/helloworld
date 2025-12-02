@@ -1,0 +1,17 @@
+{
+  "s3_key": "bonus_1.1/claim2.txt",
+  "model": "nova-micro-v1",
+  "extracted_info": {
+    "claimant_name": "Anne Bray",
+    "policy_number": "POL-427191",
+    "incident_date": "2025-10-18",
+    "claim_amount": 7174.48,
+    "description": "I was driving on Brown Hollow when I was rear-ended. The bumper and trunk has significant damage. There were no injuries, but the car is not drivable."
+  },
+  "summary": "**Insurance Claim Summary**\n\n**Claim Overview:**\nThis claim is submitted by Anne Bray, policyholder under policy number POL-427191, for a vehicle accident that occurred on October 18, 2025. The total claim amount is $7,174.48.\n\n**Incident Details:**\nOn October 18, 2025, Anne Bray was driving on Brown Hollow when her vehicle was struck from behind in a rear-end collision. The incident resulted in significant damage to the bumper and trunk of the vehicle. Fortunately, there were no reported injuries, but the car is currently not drivable.\n\n**Financial Impact:**\nThe financial impact of this incident is substantial, with the total claim amount amounting to $7,174.48. This figure covers the repair costs for the damaged parts of the vehicle, which include the bumper and trunk. Given the extent of the damage, the vehicle is currently deemed non-drivable, which may further necessitate additional costs for towing or alternative transportation arrangements.\n\n**Recommended Next Steps:**\n1. **Vehicle Assessment:** Arrange for a professional assessment of the vehicle to determine the full extent of the damage and the necessary repairs.\n2. **Estimate Preparation:** Obtain a detailed repair estimate from an authorized repair shop.\n3. **Claim Documentation:** Provide all necessary documentation, including the repair estimate, incident report, and any other relevant evidence to support the claim.\n4. **Repair Coordination:** Coordinate with the repair shop to schedule and manage the vehicle repairs.\n5. **Alternative Transportation:** Arrange for alternative transportation if required, given that the vehicle is currently non-drivable.\n\nPlease contact our office for any further assistance or to discuss the next steps in processing this claim. We are here to ensure that you receive the appropriate support and coverage under your policy.\n\n---\n\nThis summary provides a comprehensive overview of the claim, detailing the incident, its financial impact, and the recommended next steps to facilitate a smooth claims process.",
+  "performance": {
+    "extraction_time": 0.43,
+    "summary_time": 1.77
+  },
+  "processed_at": "2025-12-02T11:22:36.728820"
+}

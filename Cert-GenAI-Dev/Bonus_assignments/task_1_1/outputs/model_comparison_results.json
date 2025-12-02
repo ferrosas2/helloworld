@@ -1,0 +1,112 @@
+[
+  {
+    "s3_key": "bonus_1.1/claim1.txt",
+    "model_id": "anthropic.claude-3-sonnet-20240229-v1:0",
+    "model_name": "claude-3-sonnet-20240229-v1",
+    "status": "success",
+    "total_time": 11.89,
+    "extraction_time": 1.51,
+    "summary_time": 7.88,
+    "extracted_info_len": 324,
+    "summary_len": 1426
+  },
+  {
+    "s3_key": "bonus_1.1/claim1.txt",
+    "model_id": "amazon.nova-micro-v1:0",
+    "model_name": "nova-micro-v1",
+    "status": "success",
+    "total_time": 2.75,
+    "extraction_time": 0.46,
+    "summary_time": 1.68,
+    "extracted_info_len": 314,
+    "summary_len": 1700
+  },
+  {
+    "s3_key": "bonus_1.1/claim2.txt",
+    "model_id": "anthropic.claude-3-sonnet-20240229-v1:0",
+    "model_name": "claude-3-sonnet-20240229-v1",
+    "status": "success",
+    "total_time": 12.92,
+    "extraction_time": 1.56,
+    "summary_time": 8.67,
+    "extracted_info_len": 308,
+    "summary_len": 1802
+  },
+  {
+    "s3_key": "bonus_1.1/claim2.txt",
+    "model_id": "amazon.nova-micro-v1:0",
+    "model_name": "nova-micro-v1",
+    "status": "success",
+    "total_time": 2.95,
+    "extraction_time": 0.43,
+    "summary_time": 1.77,
+    "extracted_info_len": 298,
+    "summary_len": 2030
+  },
+  {
+    "s3_key": "bonus_1.1/claim3.txt",
+    "model_id": "anthropic.claude-3-sonnet-20240229-v1:0",
+    "model_name": "claude-3-sonnet-20240229-v1",
+    "status": "success",
+    "total_time": 19.83,
+    "extraction_time": 1.6,
+    "summary_time": 15.18,
+    "extracted_info_len": 329,
+    "summary_len": 1429
+  },
+  {
+    "s3_key": "bonus_1.1/claim3.txt",
+    "model_id": "amazon.nova-micro-v1:0",
+    "model_name": "nova-micro-v1",
+    "status": "success",
+    "total_time": 2.9,
+    "extraction_time": 0.44,
+    "summary_time": 1.67,
+    "extracted_info_len": 319,
+    "summary_len": 1763
+  },
+  {
+    "s3_key": "bonus_1.1/claim4.txt",
+    "model_id": "anthropic.claude-3-sonnet-20240229-v1:0",
+    "model_name": "claude-3-sonnet-20240229-v1",
+    "status": "success",
+    "total_time": 14.84,
+    "extraction_time": 2.73,
+    "summary_time": 9.77,
+    "extracted_info_len": 316,
+    "summary_len": 1506
+  },
+  {
+    "s3_key": "bonus_1.1/claim4.txt",
+    "model_id": "amazon.nova-micro-v1:0",
+    "model_name": "nova-micro-v1",
+    "status": "success",
+    "total_time": 2.65,
+    "extraction_time": 0.43,
+    "summary_time": 1.59,
+    "extracted_info_len": 306,
+    "summary_len": 1892
+  },
+  {
+    "s3_key": "bonus_1.1/claim5.txt",
+    "model_id": "anthropic.claude-3-sonnet-20240229-v1:0",
+    "model_name": "claude-3-sonnet-20240229-v1",
+    "status": "success",
+    "total_time": 14.65,
+    "extraction_time": 1.84,
+    "summary_time": 10.64,
+    "extracted_info_len": 329,
+    "summary_len": 1793
+  },
+  {
+    "s3_key": "bonus_1.1/claim5.txt",
+    "model_id": "amazon.nova-micro-v1:0",
+    "model_name": "nova-micro-v1",
+    "status": "success",
+    "total_time": 2.74,
+    "extraction_time": 0.49,
+    "summary_time": 1.64,
+    "extracted_info_len": 319,
+    "summary_len": 1823
+  }
+]

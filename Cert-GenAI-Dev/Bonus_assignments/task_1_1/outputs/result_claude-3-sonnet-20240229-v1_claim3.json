@@ -1,0 +1,17 @@
+{
+  "s3_key": "bonus_1.1/claim3.txt",
+  "model": "claude-3-sonnet-20240229-v1",
+  "extracted_info": {
+    "claimant_name": "Brandy Scott",
+    "policy_number": "POL-251593",
+    "incident_date": "2025-09-19",
+    "claim_amount": 12561.23,
+    "description": "I was driving on James Plains when I was backed into a pole. The rear taillight and fender has significant damage. There were no injuries, but the car is not drivable."
+  },
+  "summary": "Claim Summary\n\n1. Claim Overview:\nClaimant: Brandy Scott\nPolicy Number: POL-251593\nClaim Amount: $12,561.23\n\n2. Incident Details:\nDate of Incident: September 19, 2025\nLocation: James Plains\nDescription: The claimant was driving on James Plains when their vehicle was backed into a pole, resulting in significant damage to the rear taillight and fender. No injuries were reported, but the vehicle is not drivable.\n\n3. Financial Impact:\nThe estimated cost of repairs for the damages sustained to the claimant's vehicle is $12,561.23. This amount is being claimed under the claimant's active insurance policy.\n\n4. Recommended Next Steps:\n- Initiate the claims process by assigning an adjuster to investigate the incident and assess the damages.\n- Arrange for a tow truck to transport the vehicle to an authorized repair facility for a comprehensive evaluation and cost estimate.\n- Review the policy details and coverage limits to determine the claimant's eligibility for reimbursement or repair costs.\n- Maintain open communication with the claimant throughout the claims process, providing regular updates on the status and any additional information required.\n- Upon approval, facilitate the repair process or reimbursement according to the policy terms and conditions.\n\nPlease note that this summary is based on the information provided, and further investigation or documentation may be required to process the claim accurately.",
+  "performance": {
+    "extraction_time": 1.6,
+    "summary_time": 15.18
+  },
+  "processed_at": "2025-12-02T11:22:55.350877"
+}

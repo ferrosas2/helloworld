@@ -1,0 +1,17 @@
+{
+  "s3_key": "bonus_1.1/claim1.txt",
+  "model": "nova-micro-v1",
+  "extracted_info": {
+    "claimant_name": "Ian Lynn",
+    "policy_number": "POL-630821",
+    "incident_date": "2025-09-22",
+    "claim_amount": 9099.7,
+    "description": "I was driving on Murphy Ville when I was backed into a pole. The rear taillight and fender has significant damage. There were no injuries, but the car is not drivable."
+  },
+  "summary": "**Insurance Claim Summary**\n\n**Claim Overview:**\nThis is an insurance claim filed by Ian Lynn, identified by the policy number POL-630821. The claim pertains to an incident that occurred on September 22, 2025, where significant damage was sustained to the insured vehicle.\n\n**Incident Details:**\nOn the date of the incident, Ian Lynn was driving on Murphy Ville when he was backed into a pole. The collision resulted in substantial damage to the vehicle's rear taillight and fender. Fortunately, there were no reported injuries, but the vehicle is currently not drivable due to the extent of the damage.\n\n**Financial Impact:**\nThe total claim amount submitted is $9,099.70. This amount covers the repair costs for the damaged rear taillight and fender. The claim details indicate that the vehicle is currently inoperable, necessitating immediate attention to restore it to a safe and functional condition.\n\n**Recommended Next Steps:**\n1. **Assessment and Repair Estimate:** Arrange for a professional assessment of the vehicle to determine the precise extent of the damage and obtain a detailed repair estimate.\n2. **Vehicle Recovery:** Arrange for the vehicle to be transported to a reputable repair shop for the necessary repairs.\n3. **Claim Submission:** Submit the repair estimate to the insurance company for approval against the claim amount.\n4. **Follow-Up:** Follow up with the insurance company to ensure that the claim is processed efficiently and to address any additional documentation or information that may be required.\n\nThis summary outlines the critical aspects of the claim and provides a clear path forward to resolve the incident and restore the vehicle to its original condition.",
+  "performance": {
+    "extraction_time": 0.46,
+    "summary_time": 1.68
+  },
+  "processed_at": "2025-12-02T11:22:18.912376"
+}
