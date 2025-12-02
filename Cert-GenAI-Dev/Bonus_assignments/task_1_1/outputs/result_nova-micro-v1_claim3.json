@@ -1,0 +1,17 @@
+{
+  "s3_key": "bonus_1.1/claim3.txt",
+  "model": "nova-micro-v1",
+  "extracted_info": {
+    "claimant_name": "Brandy Scott",
+    "policy_number": "POL-251593",
+    "incident_date": "2025-09-19",
+    "claim_amount": 12561.23,
+    "description": "I was driving on James Plains when I was backed into a pole. The rear taillight and fender has significant damage. There were no injuries, but the car is not drivable."
+  },
+  "summary": "**Insurance Claim Summary**\n\n**Claim Overview:**\nThis claim is submitted by Brandy Scott, policyholder under policy number POL-251593, for an incident that occurred on September 19, 2025. The total claim amount is $12,561.23.\n\n**Incident Details:**\nOn September 19, 2025, Brandy Scott was driving on James Plains when she was backed into a pole. The collision resulted in significant damage to the rear taillight and fender of the vehicle. Fortunately, there were no reported injuries, but the vehicle is currently not drivable.\n\n**Financial Impact:**\nThe financial impact of the incident is substantial, with the total claim amount amounting to $12,561.23. This figure covers the cost of repairs necessary to restore the vehicle to its pre-incident condition.\n\n**Recommended Next Steps:**\n1. **Assessment and Repair Estimates:** Arrange for a professional assessment of the vehicle to obtain detailed repair estimates. This will help in understanding the scope of the damage and the associated costs.\n2. **Temporary Transportation:** Consider arranging for temporary transportation while the vehicle is being repaired.\n3. **Documentation:** Ensure all relevant documentation, including the police report (if available), photographs of the damage, and repair estimates, are compiled and submitted to the insurance company.\n4. **Claim Submission:** Submit the compiled documentation along with the claim amount to the insurance company for processing.\n5. **Follow-Up:** Stay in touch with the insurance adjuster to ensure timely processing of the claim and to address any additional requirements.\n\nThis summary outlines the key aspects of the claim and provides a clear path forward for the claimant and the insurance company to facilitate a smooth claims process.",
+  "performance": {
+    "extraction_time": 0.44,
+    "summary_time": 1.67
+  },
+  "processed_at": "2025-12-02T11:23:01.491562"
+}

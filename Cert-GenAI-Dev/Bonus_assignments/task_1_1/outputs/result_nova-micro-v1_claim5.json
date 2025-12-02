@@ -1,0 +1,17 @@
+{
+  "s3_key": "bonus_1.1/claim5.txt",
+  "model": "nova-micro-v1",
+  "extracted_info": {
+    "claimant_name": "Howard Blackwell",
+    "policy_number": "POL-232860",
+    "incident_date": "2025-07-01",
+    "claim_amount": 6924.96,
+    "description": "I was driving on Kim Throughway when I was side-swiped. The driver side door and mirror has significant damage. There were no injuries, but the car is not drivable."
+  },
+  "summary": "**Insurance Claim Summary**\n\n**Claim Overview:**\nThis is an insurance claim filed by Howard Blackwell, policyholder under policy number POL-232860. The claim pertains to an incident that occurred on July 1, 2025, where Mr. Blackwell's vehicle was involved in a side-swipe collision on Kim Throughway.\n\n**Incident Details:**\nOn the date of the incident, Howard Blackwell was driving on Kim Throughway when his vehicle was side-swiped by another vehicle. The collision resulted in significant damage to the driver's side door and mirror of Mr. Blackwell's vehicle. Fortunately, there were no reported injuries to Mr. Blackwell or any passengers. However, the vehicle is currently not drivable due to the extent of the damage.\n\n**Financial Impact:**\nThe total claim amount submitted by Mr. Blackwell is $6,924.96. This amount covers the cost of repairing the driver's side door and mirror, which are the primary components affected by the collision.\n\n**Recommended Next Steps:**\n1. **Assessment:** Arrange for a thorough assessment of the vehicle by a certified mechanic or a body shop to confirm the extent of the damage and to obtain an official repair estimate.\n2. **Documentation:** Ensure all relevant documentation, including the police report, photographs of the vehicle before and after the incident, and any repair estimates, are compiled and submitted to the insurance company.\n3. **Claim Submission:** Submit the compiled documentation to the insurance company at the earliest to expedite the claims process.\n4. **Follow-Up:** Follow up with the insurance company to track the status of the claim and to address any additional requirements or information needed to process the claim efficiently.\n\nThis summary outlines the necessary steps to ensure a smooth and timely resolution of Mr. Blackwell's insurance claim.",
+  "performance": {
+    "extraction_time": 0.49,
+    "summary_time": 1.64
+  },
+  "processed_at": "2025-12-02T11:23:40.561360"
+}

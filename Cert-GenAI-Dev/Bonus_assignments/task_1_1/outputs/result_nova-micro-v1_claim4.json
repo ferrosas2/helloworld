@@ -1,0 +1,17 @@
+{
+  "s3_key": "bonus_1.1/claim4.txt",
+  "model": "nova-micro-v1",
+  "extracted_info": {
+    "claimant_name": "Christopher Aguirre",
+    "policy_number": "POL-480339",
+    "incident_date": "2025-06-30",
+    "claim_amount": 8012.31,
+    "description": "I was driving on Joshua Rue when I was rear-ended. The bumper and trunk has significant damage. There were no injuries, but the car is not drivable."
+  },
+  "summary": "**Insurance Claim Summary**\n\n**Claim Overview:**\nThis is an insurance claim filed by Christopher Aguirre, policyholder under policy number POL-480339. The claim pertains to an incident that occurred on June 30, 2025, where Mr. Aguirre's vehicle was involved in a rear-end collision. The total claim amount submitted is $8,012.31.\n\n**Incident Details:**\nOn June 30, 2025, Mr. Christopher Aguirre was driving on Joshua Rue when his vehicle was rear-ended by another vehicle. The collision resulted in significant damage to the bumper and trunk of Mr. Aguirre's car. Fortunately, there were no reported injuries, but the vehicle is currently not drivable due to the extent of the damage.\n\n**Financial Impact:**\nThe financial impact of this incident is substantial, with a total claim amount of $8,012.31. This amount covers the repair costs for the significant damage to the vehicle's bumper and trunk, which are essential for the vehicle's functionality and safety.\n\n**Recommended Next Steps:**\n1. **Assessment:** Arrange for a thorough assessment of the vehicle by a certified mechanic to determine the precise extent of the damage and the necessary repair costs.\n2. **Documentation:** Collect all necessary documentation, including the police report, photographs of the vehicle before and after the incident, and any repair estimates.\n3. **Claim Submission:** Submit the collected documentation along with the claim amount to the insurance company for review.\n4. **Follow-Up:** Follow up with the insurance company to ensure the claim is being processed and to provide any additional information if required.\n5. **Temporary Arrangements:** Consider alternative transportation arrangements while the vehicle is being repaired.\n\nThis summary provides a comprehensive overview of the claim, detailing the incident, its financial impact, and the recommended steps to facilitate the claim process.",
+  "performance": {
+    "extraction_time": 0.43,
+    "summary_time": 1.59
+  },
+  "processed_at": "2025-12-02T11:23:21.155575"
+}
