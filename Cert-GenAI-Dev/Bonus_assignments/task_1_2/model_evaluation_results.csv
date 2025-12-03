@@ -1,0 +1,116 @@
+model_id,model_name,question,use_case,output,ground_truth,latency_ms,token_count,similarity_score,estimated_cost,success,error,timestamp
+anthropic.claude-3-sonnet-20240229-v1:0,claude-3-sonnet-20240229-v1:0,What is a 401(k) retirement plan?,product_question,"A 401(k) is a tax-advantaged retirement savings plan offered by many employers to their employees. Here are some key points about 401(k) plans:
+
+- It allows you to contribute a portion of your pre-tax salary to a retirement account. The money you contribute is not taxed until you withdraw it in retirement.
+
+- Many employers also offer to match a percentage of your contributions, up to a certain limit. This is essentially free money that helps your retirement savings grow faster.
+
+- The money in your 401(k) is invested, often in a selection of mutual funds representing different asset classes like stocks, bonds, etc. Investment earnings compound tax-deferred.
+
+- For 2023, you can contribute up to $22,500 per year to a 401(k) if you're under age 50. Those 50 and older can contribute up to $30,000 with catch-up contributions.
+
+- Withdrawals from 401(k)s are taxed as ordinary income. You'll pay penalties for withdrawing before age 59 1/2 in most cases.
+
+- When leaving an employer, you can roll over your 401(k) balance into an IRA or new employer's plan to keep the tax-advantaged status.
+
+A 401(k) allows you to save for retirement in a tax-efficient way through automatic payroll deductions. Taking advantage of employer matches and the power of compounding can help grow your nest egg substantially.",A 401(k) is a tax-advantaged retirement savings plan offered by employers that allows employees to contribute a portion of their salary before taxes are deducted.,12350.05,217,0.579,0.000434,True,,2025-12-02T15:55:15.137824
+anthropic.claude-instant-v1,claude-instant-v1,What is a 401(k) retirement plan?,product_question,,A 401(k) is a tax-advantaged retirement savings plan offered by employers that allows employees to contribute a portion of their salary before taxes are deducted.,153.59,0,0.0,0.0,False,An error occurred (ResourceNotFoundException) when calling the InvokeModel operation: This model version has reached the end of its life. Please refer to the AWS documentation for more details.,2025-12-02T15:55:15.791809
+amazon.titan-text-express-v1,titan-text-express-v1,What is a 401(k) retirement plan?,product_question,"
+A 401(k) is a retirement savings plan that allows you to set aside a portion of your pre-tax income and invest it in an account, where it can grow tax-deferred until you withdraw it in retirement.",A 401(k) is a tax-advantaged retirement savings plan offered by employers that allows employees to contribute a portion of their salary before taxes are deducted.,2993.69,51,0.392,5.1e-05,True,,2025-12-02T15:55:19.286749
+anthropic.claude-3-sonnet-20240229-v1:0,claude-3-sonnet-20240229-v1:0,How does compound interest work?,product_question,"Compound interest is the interest earned not only on the initial principal amount you invest or save, but also on the accumulated interest from previous periods. This means that your money can grow at an accelerating rate as the interest earned itself earns interest over time.
+
+Here's a simple example of how it works:
+
+Let's say you deposit $10,000 into an account that pays 5% interest per year.
+
+In the first year, you'll earn $500 in interest (5% of $10,000).
+In the second year, you'll earn interest on the original $10,000 plus the $500 interest earned in year 1. So you'll earn 5% of $10,500 which is $525.
+In the third year, you'll earn interest on $10,500 + $525 = $11,025. 
+And so on, with the interest earning interest on itself year after year.
+
+The longer you leave the money to compound, the faster it grows due to this ""interest on interest"" effect. That's why compound interest is so powerful for building wealth over long periods of time through consistent saving and investment.
+
+The higher the interest rate and the more frequently interest compounds (daily, monthly, annually etc.), the faster your money grows. Starting to save and invest early in life allows more time for compounding to work its magic.","Compound interest is when you earn interest on both your initial principal and the accumulated interest from previous periods, allowing your money to grow exponentially over time.",9220.42,210,0.534,0.00042,True,,2025-12-02T15:55:29.007983
+anthropic.claude-instant-v1,claude-instant-v1,How does compound interest work?,product_question,,"Compound interest is when you earn interest on both your initial principal and the accumulated interest from previous periods, allowing your money to grow exponentially over time.",142.59,0,0.0,0.0,False,An error occurred (ResourceNotFoundException) when calling the InvokeModel operation: This model version has reached the end of its life. Please refer to the AWS documentation for more details.,2025-12-02T15:55:29.651850
+amazon.titan-text-express-v1,titan-text-express-v1,How does compound interest work?,product_question,"
+Compound interest occurs when you earn interest on both the principal amount of your investment and the accumulated interest from previous periods. This results in your investment growing at a faster rate over time.","Compound interest is when you earn interest on both your initial principal and the accumulated interest from previous periods, allowing your money to grow exponentially over time.",1991.37,39,0.573,3.9e-05,True,,2025-12-02T15:55:32.144237
+anthropic.claude-3-sonnet-20240229-v1:0,claude-3-sonnet-20240229-v1:0,What is the difference between a traditional IRA and a Roth IRA?,product_question,"The main difference between a traditional IRA and a Roth IRA lies in the way they are taxed and the tax treatment of contributions and withdrawals.
+
+Traditional IRA:
+- Contributions are generally tax-deductible in the year you make them, reducing your taxable income.
+- Investment growth is tax-deferred, meaning you don't pay taxes on the gains each year.
+- Withdrawals in retirement are taxed as ordinary income.
+
+Roth IRA:
+- Contributions are made with after-tax dollars, so there is no upfront tax deduction.
+- Investment growth is tax-free, and qualified withdrawals in retirement are entirely tax-free.
+- Eligibility to contribute is subject to income limits.
+
+In summary, with a traditional IRA, you get an upfront tax break, but you'll pay taxes on withdrawals in retirement. With a Roth IRA, you pay taxes on the contributions, but qualified withdrawals in retirement are tax-free. The choice between the two depends on your current and expected future tax rates, as well as your retirement income needs and goals.","A traditional IRA offers tax-deductible contributions with taxed withdrawals in retirement, while a Roth IRA uses after-tax contributions but provides tax-free withdrawals in retirement.",5615.35,165,0.467,0.00033,True,,2025-12-02T15:55:38.260620
+anthropic.claude-instant-v1,claude-instant-v1,What is the difference between a traditional IRA and a Roth IRA?,product_question,,"A traditional IRA offers tax-deductible contributions with taxed withdrawals in retirement, while a Roth IRA uses after-tax contributions but provides tax-free withdrawals in retirement.",123.6,0,0.0,0.0,False,An error occurred (ResourceNotFoundException) when calling the InvokeModel operation: This model version has reached the end of its life. Please refer to the AWS documentation for more details.,2025-12-02T15:55:38.884613
+amazon.titan-text-express-v1,titan-text-express-v1,What is the difference between a traditional IRA and a Roth IRA?,product_question,"
+Traditional IRA contributions may be tax-deductible, while Roth IRA contributions are not tax-deductible. Additionally, Traditional IRA withdrawals are taxed as ordinary income, while Roth IRA withdrawals are tax-free.
+","A traditional IRA offers tax-deductible contributions with taxed withdrawals in retirement, while a Roth IRA uses after-tax contributions but provides tax-free withdrawals in retirement.",2118.71,46,0.314,4.6e-05,True,,2025-12-02T15:55:41.504623
+anthropic.claude-3-sonnet-20240229-v1:0,claude-3-sonnet-20240229-v1:0,What are the FDIC insurance limits?,compliance,"The Federal Deposit Insurance Corporation (FDIC) insures deposits at FDIC-insured banks and savings associations up to certain limits. Here are the current FDIC insurance limits:
+
+- $250,000 per depositor, per insured bank, for each account ownership category.
+
+The $250,000 limit applies to the combined total of all single accounts held by the same depositor at the same bank. This includes savings accounts, checking accounts, money market deposit accounts, and certificates of deposit (CDs).
+
+- $250,000 per co-owner, per insured bank, for joint accounts.
+
+For joint accounts owned by two or more people, each co-owner is insured up to $250,000 for their share of the account.
+
+- $250,000 for certain retirement accounts, per insured bank.
+
+This includes IRAs, self-directed 401(k)s, and certain other retirement accounts.
+
+It's important to note that the FDIC insurance limits apply per insured bank, not per branch location. If you have deposits at different FDIC-insured banks, your deposits at each bank are separately insured up to the limits.
+
+The FDIC insurance covers the depositor in the event of a bank failure, providing protection for their insured deposits. However, it does not cover investment losses or protect against fraud or theft.","The FDIC insures deposits up to $250,000 per depositor, per insured bank, for each account ownership category, protecting customers if a bank fails.",6356.98,193,0.555,0.000386,True,,2025-12-02T15:55:48.364074
+anthropic.claude-instant-v1,claude-instant-v1,What are the FDIC insurance limits?,compliance,,"The FDIC insures deposits up to $250,000 per depositor, per insured bank, for each account ownership category, protecting customers if a bank fails.",143.62,0,0.0,0.0,False,An error occurred (ResourceNotFoundException) when calling the InvokeModel operation: This model version has reached the end of its life. Please refer to the AWS documentation for more details.,2025-12-02T15:55:49.008896
+amazon.titan-text-express-v1,titan-text-express-v1,What are the FDIC insurance limits?,compliance,"
+The FDIC provides insurance coverage for bank deposits up to a certain limit, which varies by account type. For example, the standard maximum deposit insurance amount is $250,000 per depositor, per insured bank, for each account ownership category. However, there are certain circumstances where the FDIC may provide additional insurance coverage, such as for certain retirement accounts and trust accounts. It's important to note that the FDIC insurance limit may change in the future, and depositors should check with their bank or the FDIC for the most up-to-date information. Additionally, depositors may consider spreading their deposits across multiple insured banks to ensure that they are fully protected up to the FDIC insurance limit.","The FDIC insures deposits up to $250,000 per depositor, per insured bank, for each account ownership category, protecting customers if a bank fails.",6921.44,149,0.514,0.000149,True,,2025-12-02T15:55:56.431032
+anthropic.claude-3-sonnet-20240229-v1:0,claude-3-sonnet-20240229-v1:0,How do I update my beneficiary information?,account_inquiry,"To update your beneficiary information, please follow these steps:
+
+1. Log in to your online account or contact our customer service department.
+
+2. Navigate to the ""Accounts"" or ""Profile"" section, where you should find an option to review and edit your beneficiary designations.
+
+3. You will need to provide the full legal name, date of birth, Social Security number, and relationship to you for any new beneficiaries you wish to add.
+
+4. You can also update the percentage allocation for how you want your assets distributed among your beneficiaries.
+
+5. Review all the information carefully before submitting the changes.
+
+6. You may need to have the updates notarized or provide supporting documentation, depending on your account type and our policies.
+
+It's very important to keep your beneficiary information up-to-date, especially after major life events like marriage, divorce, or the death of a loved one. This ensures your assets transfer smoothly according to your wishes. Let us know if you need any assistance with this process.","You can update your beneficiary information by logging into your account online, calling customer service at 1-800-555-1234, or visiting a branch with valid identification.",6812.41,165,0.351,0.00033,True,,2025-12-02T15:56:03.745105
+anthropic.claude-instant-v1,claude-instant-v1,How do I update my beneficiary information?,account_inquiry,,"You can update your beneficiary information by logging into your account online, calling customer service at 1-800-555-1234, or visiting a branch with valid identification.",165.56,0,0.0,0.0,False,An error occurred (ResourceNotFoundException) when calling the InvokeModel operation: This model version has reached the end of its life. Please refer to the AWS documentation for more details.,2025-12-02T15:56:04.412320
+amazon.titan-text-express-v1,titan-text-express-v1,How do I update my beneficiary information?,account_inquiry,"
+To update your beneficiary information, we kindly request that you visit one of our local branches or contact our customer service department. Our dedicated representatives will guide you through the process and ensure that your beneficiary information is accurately updated in our system.","You can update your beneficiary information by logging into your account online, calling customer service at 1-800-555-1234, or visiting a branch with valid identification.",2435.48,48,0.271,4.8e-05,True,,2025-12-02T15:56:07.348464
+anthropic.claude-3-sonnet-20240229-v1:0,claude-3-sonnet-20240229-v1:0,What is dollar-cost averaging?,product_question,"Dollar-cost averaging is an investment strategy where you invest a fixed amount of money at regular intervals, regardless of the price of the investment. This approach helps smooth out the effects of market volatility by allowing you to buy more shares when prices are low and fewer shares when prices are high.
+
+For example, if you decide to invest $500 every month in a particular stock or mutual fund, you will purchase more shares when the price is low and fewer shares when the price is high. Over time, this can result in a lower average cost per share compared to investing a lump sum at once.
+
+Dollar-cost averaging is often used by investors who want to gradually build their investment portfolio or those who receive a steady stream of income, such as a paycheck, and want to invest a portion of it regularly. It can help remove the emotional aspect of trying to time the market and can be an effective way to build wealth over the long term through consistent investing.","Dollar-cost averaging is an investment strategy where you invest a fixed amount of money at regular intervals regardless of market conditions, helping to reduce the impact of volatility.",4102.25,173,0.533,0.000346,True,,2025-12-02T15:56:11.951420
+anthropic.claude-instant-v1,claude-instant-v1,What is dollar-cost averaging?,product_question,,"Dollar-cost averaging is an investment strategy where you invest a fixed amount of money at regular intervals regardless of market conditions, helping to reduce the impact of volatility.",141.63,0,0.0,0.0,False,An error occurred (ResourceNotFoundException) when calling the InvokeModel operation: This model version has reached the end of its life. Please refer to the AWS documentation for more details.,2025-12-02T15:56:12.593813
+amazon.titan-text-express-v1,titan-text-express-v1,What is dollar-cost averaging?,product_question,"
+Dollar-cost averaging is a long-term investment strategy in which an investor divides their investment amount into smaller, regular investments over time. This strategy aims to smooth out market fluctuations and take advantage of dollar-cost averaging, which helps the investor buy more shares when prices are low and fewer shares when prices are high .","Dollar-cost averaging is an investment strategy where you invest a fixed amount of money at regular intervals regardless of market conditions, helping to reduce the impact of volatility.",2978.28,66,0.391,6.6e-05,True,,2025-12-02T15:56:16.073430
+anthropic.claude-3-sonnet-20240229-v1:0,claude-3-sonnet-20240229-v1:0,What disclosures are required for securities trading?,compliance,"When it comes to securities trading, there are several key disclosures that are required by regulatory bodies such as the Securities and Exchange Commission (SEC) in the United States. These disclosures are designed to promote transparency, protect investors, and maintain the integrity of the financial markets. Here are some of the primary disclosures required for securities trading:
+
+1. Material information: Companies are required to disclose all material information that could potentially affect an investor's decision to buy, sell, or hold a security. This includes information about financial performance, significant events, changes in management, legal proceedings, and any other factors that could impact the company's operations or stock price.
+
+2. Insider trading: Insiders, such as company executives, directors, and employees with access to non-public material information, are required to disclose their transactions in the company's securities. This disclosure helps prevent insider trading, which is illegal and undermines market fairness.
+
+3. Beneficial ownership: Individuals or entities that own a significant stake (typically 5% or more) in a publicly traded company must disclose their ownership and any changes to their holdings. This disclosure helps investors understand the ownership structure and potential influences on the company.
+
+4. Proxy statements: Companies must provide shareholders with proxy statements before annual meetings, which include information about the company's governance, executive compensation, and any proposals or matters to be voted on by shareholders.
+
+5. Registration statements: When a company issues new securities or conducts an initial public offering (IPO), it must file a registration statement with the SEC, which includes detailed information about the company's business, financial condition, risk factors, and the terms of the securities offering.
+
+6. Periodic reports: Publicly traded companies are required to file periodic reports, such as annual reports (Form 10-K) and quarterly reports (Form 10-Q), which provide comprehensive updates on the company's financial performance, operations, and other relevant information.
+
+It's important to note that these disclosures are subject to specific requirements and deadlines set by regulatory bodies. Failure to comply with disclosure obligations can result in penalties, legal actions, and potential damage to a company's reputation and investor confidence.","Securities trading requires disclosure of material information, risks, fees, conflicts of interest, and compliance with SEC regulations to ensure investor protection and market transparency.",11969.16,346,0.292,0.000692,True,,2025-12-02T15:56:28.543781
+anthropic.claude-instant-v1,claude-instant-v1,What disclosures are required for securities trading?,compliance,,"Securities trading requires disclosure of material information, risks, fees, conflicts of interest, and compliance with SEC regulations to ensure investor protection and market transparency.",125.08,0,0.0,0.0,False,An error occurred (ResourceNotFoundException) when calling the InvokeModel operation: This model version has reached the end of its life. Please refer to the AWS documentation for more details.,2025-12-02T15:56:29.169520
+amazon.titan-text-express-v1,titan-text-express-v1,What disclosures are required for securities trading?,compliance,Sorry - this model is unable to respond to this request.,"Securities trading requires disclosure of material information, risks, fees, conflicts of interest, and compliance with SEC regulations to ensure investor protection and market transparency.",11235.24,13,0.041,1.3e-05,True,,2025-12-02T15:56:40.906053
