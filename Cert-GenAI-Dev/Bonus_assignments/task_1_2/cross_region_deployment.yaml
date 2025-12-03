@@ -1,0 +1,222 @@
+
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AI Assistant Cross-Region Deployment for High Availability'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: prod
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+    Description: Deployment environment
+
+  AppName:
+    Type: String
+    Default: AIAssistantApp
+    Description: Application name for resource naming
+
+Resources:
+  # IAM Role for Lambda functions
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${AppName}-Lambda-Role-${Environment}"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+      Policies:
+        - PolicyName: BedrockAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'bedrock:InvokeModel'
+                  - 'bedrock-runtime:InvokeModel'
+                Resource: '*'
+        - PolicyName: AppConfigAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'appconfig:GetConfiguration'
+                  - 'appconfig:StartConfigurationSession'
+                  - 'appconfig:GetLatestConfiguration'
+                Resource: '*'
+        - PolicyName: DynamoDBAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'dynamodb:PutItem'
+                  - 'dynamodb:GetItem'
+                  - 'dynamodb:UpdateItem'
+                Resource: !GetAtt CircuitBreakerTable.Arn
+
+  # DynamoDB table for circuit breaker state
+  CircuitBreakerTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AppName}-CircuitBreaker-${Environment}"
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: circuitId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: circuitId
+          KeyType: HASH
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
+  # Model Abstraction Lambda
+  ModelAbstractionLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${AppName}-ModelAbstraction-${Environment}"
+      Runtime: python3.11
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 30
+      MemorySize: 512
+      Environment:
+        Variables:
+          APP_NAME: !Ref AppName
+          ENVIRONMENT: !Ref Environment
+      Code:
+        ZipFile: |
+          # Code from model_abstraction_lambda.py
+          import json
+          def lambda_handler(event, context):
+              return {'statusCode': 200, 'body': json.dumps('Placeholder')}
+
+  # Fallback Model Lambda
+  FallbackModelLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${AppName}-FallbackModel-${Environment}"
+      Runtime: python3.11
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 20
+      MemorySize: 256
+      Code:
+        ZipFile: |
+          # Code from fallback_model_lambda.py
+          import json
+          def lambda_handler(event, context):
+              return {'statusCode': 200, 'body': json.dumps('Fallback')}
+
+  # Graceful Degradation Lambda
+  GracefulDegradationLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${AppName}-GracefulDegradation-${Environment}"
+      Runtime: python3.11
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 10
+      MemorySize: 128
+      Code:
+        ZipFile: |
+          # Code from graceful_degradation_lambda.py
+          import json
+          def lambda_handler(event, context):
+              return {'statusCode': 200, 'body': json.dumps('Degraded')}
+
+  # API Gateway
+  ApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Sub "${AppName}-API-${Environment}"
+      Description: API for AI Assistant
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+
+  # API Gateway Resource
+  GenerateResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref ApiGateway
+      ParentId: !GetAtt ApiGateway.RootResourceId
+      PathPart: generate
+
+  # API Gateway Method
+  GenerateMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref ApiGateway
+      ResourceId: !Ref GenerateResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ModelAbstractionLambda.Arn}/invocations"
+
+  # Lambda Permission for API Gateway
+  ApiGatewayInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref ModelAbstractionLambda
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGateway}/*"
+
+  # API Gateway Deployment
+  ApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: GenerateMethod
+    Properties:
+      RestApiId: !Ref ApiGateway
+      StageName: !Ref Environment
+
+  # CloudWatch Log Group
+  ApiLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/apigateway/${AppName}-${Environment}"
+      RetentionInDays: 30
+
+Outputs:
+  ApiEndpoint:
+    Description: API Gateway endpoint URL
+    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/generate"
+    Export:
+      Name: !Sub "${AppName}-ApiEndpoint-${Environment}"
+
+  ModelAbstractionLambdaArn:
+    Description: Model Abstraction Lambda ARN
+    Value: !GetAtt ModelAbstractionLambda.Arn
+    Export:
+      Name: !Sub "${AppName}-ModelAbstractionLambda-${Environment}"
+
+  FallbackModelLambdaArn:
+    Description: Fallback Model Lambda ARN
+    Value: !GetAtt FallbackModelLambda.Arn
+    Export:
+      Name: !Sub "${AppName}-FallbackModelLambda-${Environment}"
+
+  GracefulDegradationLambdaArn:
+    Description: Graceful Degradation Lambda ARN
+    Value: !GetAtt GracefulDegradationLambda.Arn
+    Export:
+      Name: !Sub "${AppName}-GracefulDegradationLambda-${Environment}"
+
+  CircuitBreakerTableName:
+    Description: DynamoDB Circuit Breaker Table Name
+    Value: !Ref CircuitBreakerTable
+    Export:
+      Name: !Sub "${AppName}-CircuitBreakerTable-${Environment}"
