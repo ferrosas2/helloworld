@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "last_updated": "2025-12-02T15:57:23.336377",
+  "primary_model": "amazon.titan-text-express-v1",
+  "fallback_models": [
+    "anthropic.claude-3-sonnet-20240229-v1:0"
+  ],
+  "use_case_models": {
+    "product_question": "anthropic.claude-3-sonnet-20240229-v1:0",
+    "compliance": "anthropic.claude-3-sonnet-20240229-v1:0",
+    "account_inquiry": "anthropic.claude-3-sonnet-20240229-v1:0"
+  },
+  "model_scores": [
+    {
+      "model_id": "amazon.titan-text-express-v1",
+      "avg_latency_ms": 4382.03,
+      "avg_similarity": 0.3565714285714286,
+      "total_cost": 0.000412,
+      "num_evaluations": 7,
+      "latency_score": 0.456387605708086,
+      "cost_score": 0.8597685500340367,
+      "quality_score": 0.3565714285714286,
+      "overall_score": 0.48715570600494745
+    },
+    {
+      "model_id": "anthropic.claude-3-sonnet-20240229-v1:0",
+      "avg_latency_ms": 8060.945714285714,
+      "avg_similarity": 0.473,
+      "total_cost": 0.002938,
+      "num_evaluations": 7,
+      "latency_score": 0.0,
+      "cost_score": 0.0,
+      "quality_score": 0.473,
+      "overall_score": 0.2365
+    }
+  ],
+  "thresholds": {
+    "max_latency_ms": 5000,
+    "min_similarity_score": 0.3,
+    "max_cost_per_request": 0.01
+  },
+  "guardrails": {
+    "content_filters": [
+      "profanity",
+      "pii",
+      "financial_advice_disclaimer"
+    ],
+    "max_retries": 3,
+    "circuit_breaker_threshold": 5
+  }
+}
