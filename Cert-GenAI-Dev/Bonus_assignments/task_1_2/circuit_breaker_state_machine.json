@@ -1,0 +1,157 @@
+{
+  "Comment": "AI Assistant with Circuit Breaker Pattern for Resilient Model Invocation",
+  "StartAt": "TryPrimaryModel",
+  "States": {
+    "TryPrimaryModel": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${PrimaryModelLambdaArn}",
+        "Payload": {
+          "prompt.$": "$.prompt",
+          "use_case.$": "$.use_case",
+          "max_tokens.$": "$.max_tokens"
+        }
+      },
+      "ResultPath": "$.primaryResult",
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.TooManyRequestsException"
+          ],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 2,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.primaryError",
+          "Next": "IncrementFailureCount"
+        }
+      ],
+      "Next": "ResetFailureCount"
+    },
+    "IncrementFailureCount": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:updateItem",
+      "Parameters": {
+        "TableName": "${CircuitBreakerTable}",
+        "Key": {
+          "circuitId": {
+            "S": "primary-model"
+          }
+        },
+        "UpdateExpression": "ADD failureCount :inc SET lastFailure = :timestamp",
+        "ExpressionAttributeValues": {
+          ":inc": {
+            "N": "1"
+          },
+          ":timestamp": {
+            "S.$": "$$.State.EnteredTime"
+          }
+        }
+      },
+      "ResultPath": "$.circuitState",
+      "Next": "CheckCircuitBreaker"
+    },
+    "CheckCircuitBreaker": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.circuitState.Attributes.failureCount.N",
+          "NumericGreaterThan": 5,
+          "Next": "CircuitOpen"
+        }
+      ],
+      "Default": "TryFallbackModel"
+    },
+    "CircuitOpen": {
+      "Type": "Pass",
+      "Result": {
+        "status": "circuit_open",
+        "message": "Circuit breaker open due to repeated failures"
+      },
+      "ResultPath": "$.circuitStatus",
+      "Next": "GracefulDegradation"
+    },
+    "TryFallbackModel": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${FallbackModelLambdaArn}",
+        "Payload": {
+          "prompt.$": "$.prompt",
+          "use_case.$": "$.use_case",
+          "is_fallback": true
+        }
+      },
+      "ResultPath": "$.fallbackResult",
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.TooManyRequestsException"
+          ],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 2,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.fallbackError",
+          "Next": "GracefulDegradation"
+        }
+      ],
+      "Next": "SuccessState"
+    },
+    "GracefulDegradation": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${DegradationLambdaArn}",
+        "Payload": {
+          "prompt.$": "$.prompt",
+          "use_case.$": "$.use_case",
+          "reason": "all_models_failed"
+        }
+      },
+      "ResultPath": "$.degradationResult",
+      "Next": "SuccessState"
+    },
+    "ResetFailureCount": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:updateItem",
+      "Parameters": {
+        "TableName": "${CircuitBreakerTable}",
+        "Key": {
+          "circuitId": {
+            "S": "primary-model"
+          }
+        },
+        "UpdateExpression": "SET failureCount = :zero, lastSuccess = :timestamp",
+        "ExpressionAttributeValues": {
+          ":zero": {
+            "N": "0"
+          },
+          ":timestamp": {
+            "S.$": "$$.State.EnteredTime"
+          }
+        }
+      },
+      "ResultPath": "$.resetResult",
+      "Next": "SuccessState"
+    },
+    "SuccessState": {
+      "Type": "Succeed"
+    }
+  }
+}
