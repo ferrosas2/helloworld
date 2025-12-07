@@ -162,42 +162,6 @@ S3 Download → DataFrame Parse → Comprehend Analysis → S3 Results
 | Location | Geographic location |
 | ConfidenceScore | Original confidence score |
 
-#### 🔄 Data Flow Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    DATA INGESTION LAYER                         │
-├──────────────────────────────┬──────────────────────────────────┤
-│   Individual Test Files      │   CSV Bulk Data (96 reviews)    │
-│   (.txt, .json uploads)      │   (clean-input-data.csv)        │
-└──────────────┬───────────────┴──────────────┬──────────────────┘
-               │                               │
-               ▼                               ▼
-      ┌────────────────┐            ┌──────────────────┐
-      │ Lambda Function│            │ Direct S3 Read   │
-      │  Validation    │            │ & Parse CSV      │
-      └────────┬───────┘            └────────┬─────────┘
-               │                              │
-               ├──────────────────────────────┤
-               │                              │
-               ▼                              ▼
-      ┌────────────────────────────────────────────────┐
-      │      Amazon Comprehend (Text Analysis)         │
-      │  • Sentiment Detection                         │
-      │  • Entity Extraction                           │
-      │  • Key Phrase Identification                   │
-      │  • Language Detection                          │
-      └──────────────────┬─────────────────────────────┘
-                         │
-                         ▼
-      ┌────────────────────────────────────────────────┐
-      │         Combined Results Storage (S3)          │
-      │  • Individual analysis files                   │
-      │  • Unified report with both sources            │
-      │  • Source tracking (test_file vs CSV)          │
-      └────────────────────────────────────────────────┘
-```
-
 #### 📊 Current Processing Status
 
 **Test Files:**
@@ -459,15 +423,6 @@ This project has implemented a comprehensive data validation and processing pipe
    - Adjust validation thresholds as needed
    - Add more quality checks to Lambda function
 
-### 💡 Additional Features to Consider:
-
-- **Real-time Streaming**: Integrate Amazon Kinesis for real-time feedback processing
-- **Advanced Analytics**: Use Amazon SageMaker for custom ML models
-- **Domain-Specific NER**: Train custom entity recognition models
-- **Business Intelligence**: Connect to QuickSight for visualization
-- **Automated Alerts**: Set up SNS notifications for quality threshold breaches
-- **Multi-Language Support**: Extend Comprehend analysis to support multiple languages
-- **Historical Trending**: Build time-series analysis for sentiment trends
 
 ### 🔗 Related AWS Services:
 
@@ -499,3 +454,4 @@ This project has implemented a comprehensive data validation and processing pipe
 ✅ **Production-Ready**: Complete pipeline with error handling, logging, and monitoring  
 
 **Pipeline Status**: 🎉 **PRODUCTION-READY for Text Analysis!**
+
