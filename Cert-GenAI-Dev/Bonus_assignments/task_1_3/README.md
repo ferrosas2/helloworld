@@ -240,9 +240,7 @@ csv_reviews = process_csv_reviews_with_comprehend(max_reviews=96)
 
 **Status:** Pipeline is production-ready for both data sources! 🎉
 
-================================================================================
-                         📊 PIPELINE STATISTICS
-================================================================================
+📊 PIPELINE STATISTICS
 
 Data Sources:              2 (Test Files + CSV)
 Total Reviews Available:   99 (3 test files + 96 CSV rows)
@@ -351,5 +349,6 @@ This project has implemented a comprehensive data validation and processing pipe
 ✅ **Production-Ready**: Complete pipeline with error handling, logging, and monitoring  
 
 **Pipeline Status**: 🎉 **PRODUCTION-READY for Text Analysis!**
+
 
 
