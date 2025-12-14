@@ -83,12 +83,9 @@ Automate the extraction and summarization of unstructured insurance claim docume
 
 ---
 
-### **Cert-GenAI-Dev-2: Enterprise AI Systems**
+### **Enterprise AI Systems**
 
-Four advanced projects demonstrating production-grade AI system design with resilience, compliance, and MLOps best practices.
-
-#### 📂 Location
-[`Cert-GenAI-Dev-2/`](Cert-GenAI-Dev-2/)
+Advanced projects demonstrating production-grade AI system design with resilience, compliance, and MLOps best practices.
 
 ---
 
@@ -109,7 +106,7 @@ API Gateway → Lambda (Model Abstraction Layer) → AppConfig → Bedrock Model
 ```
 
 ##### ✨ Key Features
-- **Foundation Model Benchmarking** ([Section 1-4](Cert-GenAI-Dev-2/task_1_2/financials_ai_assistant.ipynb)):
+- **Foundation Model Benchmarking** ([Section 1-4](Bonus_assignments/task_1_2/financials_ai_assistant.ipynb)):
   - Evaluates Claude Sonnet, Claude Instant, and Titan Express on 7 financial Q&A test cases
   - Measures latency, quality (word overlap similarity), and cost per 1K tokens
   - Generates [`model_evaluation_results.csv`](Cert-GenAI-Dev-2/task_1_2/) for data-driven selection
@@ -479,5 +476,6 @@ This project is provided as-is for educational purposes as part of the AWS Certi
 ---
 
 **⭐ If you found these projects helpful, please star the repository!**
+
 
 
