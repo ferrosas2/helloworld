@@ -1,4 +1,4 @@
-# AWS Generative AI Projects Portfolio
+# Fernando Rosas Public AWS Generative AI Projects Portfolio
 
 [![AWS](https://img.shields.io/badge/AWS-Certified-orange?logo=amazon-aws)](https://aws.amazon.com/)
 [![Bedrock](https://img.shields.io/badge/Amazon-Bedrock-blue)](https://aws.amazon.com/bedrock/)
@@ -109,21 +109,21 @@ API Gateway → Lambda (Model Abstraction Layer) → AppConfig → Bedrock Model
 - **Foundation Model Benchmarking** ([Section 1-4](Bonus_assignments/task_1_2/financials_ai_assistant.ipynb)):
   - Evaluates Claude Sonnet, Claude Instant, and Titan Express on 7 financial Q&A test cases
   - Measures latency, quality (word overlap similarity), and cost per 1K tokens
-  - Generates [`model_evaluation_results.csv`](Cert-GenAI-Dev-2/task_1_2/) for data-driven selection
+  - Generates [`model_evaluation_results.csv`](Bonus_assignments/task_1_2/) for data-driven selection
 
-- **Dynamic Model Selection** ([Section 5-8](Cert-GenAI-Dev-2/task_1_2/financials_ai_assistant.ipynb)):
+- **Dynamic Model Selection** ([Section 5-8](Bonus_assignments/task_1_2/financials_ai_assistant.ipynb)):
   - AWS AppConfig integration for runtime model switching without redeployment
   - Use case-based routing (product questions, compliance, personalized outreach)
-  - API Gateway + Lambda architecture ([`model_abstraction_lambda.py`](Cert-GenAI-Dev-2/task_1_2/model_abstraction_lambda.py))
+  - API Gateway + Lambda architecture ([`model_abstraction_lambda.py`](Bonus_assignments/task_1_2/model_abstraction_lambda.py))
 
-- **Resilient System Design** ([Section 9-11](Cert-GenAI-Dev-2/task_1_2/financials_ai_assistant.ipynb)):
+- **Resilient System Design** ([Section 9-11](Bonus_assignments/task_1_2/financials_ai_assistant.ipynb)):
   - **Circuit Breaker**: Step Functions state machine tracks failure rates in DynamoDB
-  - **Fallback Model**: Titan Express as secondary option ([`fallback_model_lambda.py`](Cert-GenAI-Dev-2/task_1_2/fallback_model_lambda.py))
-  - **Graceful Degradation**: Predefined regulation-compliant responses ([`graceful_degradation_lambda.py`](Cert-GenAI-Dev-2/task_1_2/graceful_degradation_lambda.py))
+  - **Fallback Model**: Titan Express as secondary option ([`fallback_model_lambda.py`](Bonus_assignments/task_1_2/fallback_model_lambda.py))
+  - **Graceful Degradation**: Predefined regulation-compliant responses ([`graceful_degradation_lambda.py`](Bonus_assignments/task_1_2/graceful_degradation_lambda.py))
   - **Multi-Region HA**: CloudFormation template for Route 53 health checks
 
-- **Model Customization & Lifecycle** ([Section 12-14](Cert-GenAI-Dev-2/task_1_2/financials_ai_assistant.ipynb)):
-  - SageMaker fine-tuning with HuggingFace Transformers ([`train.py`](Cert-GenAI-Dev-2/task_1_2/train.py))
+- **Model Customization & Lifecycle** ([Section 12-14](Bonus_assignments/task_1_2/financials_ai_assistant.ipynb)):
+  - SageMaker fine-tuning with HuggingFace Transformers ([`train.py`](Bonus_assignments/task_1_2/train.py))
   - A/B testing with traffic splitting (90/10)
   - Automated cleanup of old endpoints/models (>7 days)
 
@@ -142,11 +142,11 @@ API Gateway → Lambda (Model Abstraction Layer) → AppConfig → Bedrock Model
 - **Python Libraries**: `boto3`, `transformers`, `datasets`, `pandas`
 
 ##### 📁 Key Files
-- [`financials_ai_assistant.ipynb`](Cert-GenAI-Dev-2/task_1_2/financials_ai_assistant.ipynb): Complete implementation (3,249 lines)
-- [`train.py`](Cert-GenAI-Dev-2/task_1_2/train.py): SageMaker training script
-- [`model_selection_strategy.json`](Cert-GenAI-Dev-2/task_1_2/model_selection_strategy.json): AppConfig routing rules
-- [`cross_region_deployment.yaml`](Cert-GenAI-Dev-2/task_1_2/): CloudFormation template for HA
-- [`README.md`](Cert-GenAI-Dev-2/task_1_2/README.md): Comprehensive architecture guide (389 lines)
+- [`financials_ai_assistant.ipynb`](Bonus_assignments/task_1_2/financials_ai_assistant.ipynb): Complete implementation (3,249 lines)
+- [`train.py`](Bonus_assignments/task_1_2/train.py): SageMaker training script
+- [`model_selection_strategy.json`](Bonus_assignments/task_1_2/model_selection_strategy.json): AppConfig routing rules
+- [`cross_region_deployment.yaml`](Bonus_assignments/task_1_2/): CloudFormation template for HA
+- [`README.md`](Bonus_assignments/task_1_2/README.md): Comprehensive architecture guide (389 lines)
 
 ---
 
@@ -170,7 +170,7 @@ S3 (raw-data/) → EventBridge → Lambda (Validation) → Glue Crawler
 
 ##### ✨ Key Features
 - **Dual Data Sources**:
-  - CSV bulk import: 96 pre-labeled customer reviews ([`clean-input-data.csv`](Cert-GenAI-Dev-2/task_1_3/))
+  - CSV bulk import: 96 pre-labeled customer reviews ([`clean-input-data.csv`](Bonus_assignments/task_1_3/))
   - Individual files: 3 test reviews (`.txt`, `.json`) for real-time processing
 
 - **Automated Validation**:
@@ -200,9 +200,9 @@ S3 (raw-data/) → EventBridge → Lambda (Validation) → Glue Crawler
 - **Python Libraries**: `boto3`, `pandas`, `json`
 
 ##### 📁 Key Files
-- [`customer_feedback.ipynb`](Cert-GenAI-Dev-2/task_1_3/customer_feedback.ipynb): Complete pipeline (5,132 lines)
-- [`README.md`](Cert-GenAI-Dev-2/task_1_3/README.md): Architecture diagram and implementation guide (489 lines)
-- [`reports/unified_comprehend_report_*.json`](Cert-GenAI-Dev-2/task_1_3/reports/): Sentiment analysis results
+- [`customer_feedback.ipynb`](Bonus_assignments/task_1_3/customer_feedback.ipynb): Complete pipeline (5,132 lines)
+- [`README.md`](Bonus_assignments/task_1_3/README.md): Architecture diagram and implementation guide (489 lines)
+- [`reports/unified_comprehend_report_*.json`](Bonus_assignments/task_1_3/reports/): Sentiment analysis results
 
 ---
 
@@ -241,7 +241,7 @@ Reddit Dataset (Kaggle) → Lambda (Document Processor) → S3 (docs-bucket)
   - A/B testing framework for model comparison
 
 - **Complete Cleanup Script**:
-  - [`AWS-Cleanup.ipynb`](Cert-GenAI-Dev-2/task_1_4/AWS-Cleanup.ipynb) for resource teardown
+  - [`AWS-Cleanup.ipynb`](Bonus_assignments/task_1_4/AWS-Cleanup.ipynb) for resource teardown
   - Deletes Knowledge Base, OpenSearch collection, Lambda, S3 buckets, DynamoDB, IAM roles
 
 ##### 📊 Performance Metrics
@@ -256,10 +256,10 @@ Reddit Dataset (Kaggle) → Lambda (Document Processor) → S3 (docs-bucket)
 - **Python Libraries**: `boto3`, `opensearch-py`, `pandas`
 
 ##### 📁 Key Files
-- [`Reddit=Vector-Store.ipynb`](Cert-GenAI-Dev-2/task_1_4/Reddit=Vector-Store.ipynb): Complete implementation (4,978 lines)
-- [`AWS-Cleanup.ipynb`](Cert-GenAI-Dev-2/task_1_4/AWS-Cleanup.ipynb): Resource cleanup automation
-- [`instructions.md`](Cert-GenAI-Dev-2/task_1_4/instructions.md): Setup and deployment guide
-- [`README.md`](Cert-GenAI-Dev-2/task_1_4/README.md): Comprehensive architecture and usage (319 lines)
+- [`Reddit=Vector-Store.ipynb`](Bonus_assignments/task_1_4/Reddit=Vector-Store.ipynb): Complete implementation (4,978 lines)
+- [`AWS-Cleanup.ipynb`](Bonus_assignments/task_1_4/AWS-Cleanup.ipynb): Resource cleanup automation
+- [`instructions.md`](Bonus_assignments/task_1_4/instructions.md): Setup and deployment guide
+- [`README.md`](Bonus_assignments/task_1_4/README.md): Comprehensive architecture and usage (319 lines)
 
 ---
 
@@ -476,6 +476,7 @@ This project is provided as-is for educational purposes as part of the AWS Certi
 ---
 
 **⭐ If you found these projects helpful, please star the repository!**
+
 
 
 
