@@ -43,7 +43,7 @@ This repository contains advanced AWS Generative AI implementations completed as
 A complete proof-of-concept (POC) system for automated insurance claims processing using Amazon Bedrock foundation models.
 
 #### 📂 Location
-[`Cert-GenAI-Dev/Bonus_assignments/`](Cert-GenAI-Dev/Bonus_assignments/)
+[`Bonus_assignments/`](Bonus_assignments/)
 
 #### 🎯 Business Problem
 Automate the extraction and summarization of unstructured insurance claim documents to reduce manual processing time and improve accuracy.
@@ -479,5 +479,6 @@ This project is provided as-is for educational purposes as part of the AWS Certi
 ---
 
 **⭐ If you found these projects helpful, please star the repository!**
+
 
 
