@@ -43,7 +43,7 @@ This repository contains advanced AWS Generative AI implementations completed as
 A complete proof-of-concept (POC) system for automated insurance claims processing using Amazon Bedrock foundation models.
 
 #### 📂 Location
-[`Bonus_assignments/`](Bonus_assignments/)
+[`Bonus_assignments/task_1_1/`](Bonus_assignments/task_1_1)
 
 #### 🎯 Business Problem
 Automate the extraction and summarization of unstructured insurance claim documents to reduce manual processing time and improve accuracy.
@@ -55,12 +55,12 @@ Automate the extraction and summarization of unstructured insurance claim docume
 - **Evaluation Framework**: Latency, quality, and cost metrics comparison
 
 #### ✨ Key Features
-- **Synthetic Data Generator**: Uses Faker library to create realistic test claims ([`synthetic-text-generator.ipynb`](Cert-GenAI-Dev/synthetic-text-generator.ipynb))
+- **Synthetic Data Generator**: Uses Faker library to create realistic test claims ([`synthetic-text-generator.ipynb`](Bonus_assignments/task_1_1/synthetic-text-generator.ipynb))
 - **Reusable Components**:
   - `PromptTemplateManager`: Centralized prompt management
   - `invoke_bedrock_model()`: Unified model invocation wrapper
   - `process_claim_with_model()`: End-to-end workflow orchestration
-- **Multi-Model Evaluation**: Automated comparison of 2+ foundation models ([`poc-claims-v3.ipynb`](Cert-GenAI-Dev/poc-claims-v3.ipynb))
+- **Multi-Model Evaluation**: Automated comparison of 2+ foundation models ([`poc-claims-v3.ipynb`](Bonus_assignments/task_1_1/poc-claims-v3.ipynb))
 - **S3 Integration**: Automatic upload of results to `s3://cert-genai-dev/bonus_1.1/outputs/`
 
 #### 📊 Results
@@ -77,9 +77,9 @@ Automate the extraction and summarization of unstructured insurance claim docume
 - **Python Libraries**: `boto3`, `faker`, `json`, `pathlib`
 
 #### 📁 Key Files
-- [`poc-claims-v3.ipynb`](Cert-GenAI-Dev/poc-claims-v3.ipynb): Complete implementation with model comparison
-- [`synthetic-text-generator.ipynb`](Cert-GenAI-Dev/synthetic-text-generator.ipynb): Test data generation
-- [`README.md`](Cert-GenAI-Dev/README.md): Detailed architecture and setup guide
+- [`poc-claims-v3.ipynb`](Bonus_assignments/task_1_1/poc-claims-v3.ipynb): Complete implementation with model comparison
+- [`synthetic-text-generator.ipynb`](Bonus_assignments/task_1_1/synthetic-text-generator.ipynb): Test data generation
+- [`README.md`](Bonus_assignments/task_1_1/README.md): Detailed architecture and setup guide
 
 ---
 
@@ -479,4 +479,5 @@ This project is provided as-is for educational purposes as part of the AWS Certi
 ---
 
 **⭐ If you found these projects helpful, please star the repository!**
+
 
