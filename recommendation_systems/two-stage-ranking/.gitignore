@@ -58,3 +58,6 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+# PowerShell scripts
+*.ps1
