@@ -2,9 +2,6 @@
 
 ## 🚀  Demo
 
-export AWS_ACCESS_KEY_ID=your_key
-export AWS_SECRET_ACCESS_KEY=your_secret
-
 ### 1. Clone & Setup (30 seconds)
 ```bash
 cd two-stage-ranking
@@ -13,7 +10,10 @@ pip install -r requirements.txt
 
 ### 2. Train Model Locally (2 minutes)
 ```bash
-python src/train.py   --bucket ltr-models-frp   --key data/ltr_training_data.csv   --output-dir ./models
+python src/train.py \
+  --bucket ltr-models-frp \
+  --key data/ltr_training_data.csv \
+  --output-dir ./models
 ```
 
 ### 3. Test Inference (10 seconds)

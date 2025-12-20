@@ -213,7 +213,7 @@ The model expects CSV data with the following schema:
 | Column            | Type    | Description                                    |
 |-------------------|---------|------------------------------------------------|
 | `query_group_id`  | int     | Groups items belonging to the same query       |
-| `label`           | int     | Relevance label (0=irrelevant, 1-5=relevant)   |
+| `label`           | int     | Relevance label (0=not purchased, 1=purchased) |
 | `retail_price`    | float   | Item price shown to customer                   |
 | `cost`            | float   | Internal cost (for margin calculation)         |
 | `category`        | string  | Item category (Watches, Bags, etc.)            |
@@ -221,11 +221,11 @@ The model expects CSV data with the following schema:
 **Example (from thelook_ecommerce):**
 ```csv
 query_group_id,label,retail_price,cost,category
-1,3,89.99,45.0,Intimates
-1,2,29.99,15.0,Socks
-1,1,79.99,40.0,Pants
-2,5,149.99,75.0,Outerwear & Coats
-2,4,99.99,50.0,Sweaters
+1,1,89.99,45.0,Intimates
+1,0,29.99,15.0,Socks
+1,0,79.99,40.0,Pants
+2,1,149.99,75.0,Outerwear & Coats
+2,0,99.99,50.0,Sweaters
 ```
 
 **Data Source:** Generated from `notebooks/ltr-training-data.sql` using BigQuery's `thelook_ecommerce` public dataset.
@@ -271,19 +271,20 @@ Current baseline uses **numeric features**:
 - **User-Item Interactions**: Click-through rate, dwell time
 - **Contextual Features**: Time of day, device type
 
+**Additional evaluation metrics to implement:**
+- **MAP** (Mean Average Precision): Precision at various recall levels
+- **MRR** (Mean Reciprocal Rank): Position of first relevant item
+
 ---
 
 ## 📈 Evaluation Metrics
 
-The model is evaluated using:
+The model is currently evaluated using:
 
 - **NDCG@10** (Normalized Discounted Cumulative Gain): Measures ranking quality with position discount
-- **MAP** (Mean Average Precision): Precision at various recall levels
-- **MRR** (Mean Reciprocal Rank): Position of first relevant item
 
-**Target Performance:**
+**Current Performance Target:**
 - NDCG@10 > 0.75
-- MAP > 0.70
 - Inference latency < 50ms
 
 ---
@@ -356,14 +357,6 @@ black src/
 isort src/
 ```
 
----
-
-## 📚 References
-
-### Academic Papers
-- **LambdaMART**: Burges, C. J. (2010). *From RankNet to LambdaRANK to LambdaMART: An Overview.*
-- **Learning to Rank**: Liu, T. Y. (2009). *Learning to Rank for Information Retrieval.*
-
 ### AWS Documentation
 - [SageMaker XGBoost](https://docs.aws.amazon.com/sagemaker/latest/dg/xgboost.html)
 - [SageMaker Inference](https://docs.aws.amazon.com/sagemaker/latest/dg/realtime-endpoints.html)
@@ -395,21 +388,12 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 👤 Author
 
-**Senior MLOps Engineer**  
-*Technical Showcase for ATG Interview*
+**Fernando Rosas**  
 
-- GitHub: [@aminajavaid30](https://github.com/aminajavaid30)
-- LinkedIn: [Connect](https://linkedin.com/in/yourprofile)
 
----
+- GitHub: [@ferrosas2](https://github.com/ferrosas2)
+- LinkedIn: [Connect](https://www.linkedin.com/in/ferrosas2/)
 
-## 🙏 Acknowledgments
-
-- **ATG Team**: For the opportunity to demonstrate production ML skills
-- **XGBoost Community**: For the excellent learning-to-rank implementation
-- **AWS**: For SageMaker and OpenSearch services
-
----
 
 ## 📌 Roadmap
 
@@ -425,4 +409,3 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-**Built with ❤️ for high-scale auction recommendations**
