@@ -89,27 +89,24 @@ pip install -r requirements.txt
 ### 2. Configure AWS Credentials
 
 ```bash
-aws configure
-# Enter your AWS Access Key ID, Secret Access Key, and region
+export AWS_ACCESS_KEY_ID="your_key"
+export AWS_SECRET_ACCESS_KEY="your_secret"
+export AWS_DEFAULT_REGION="us-east-1"
+# Enter your AWS Access Key ID, Secret Access Key
 ```
 
 ### 3. Train the Model Locally
 
 ```bash
-python src/train.py \
-  --bucket ltr-models-frp \
-  --key data/ltr_training_data.csv \
-  --output-dir ./models \
-  --n-estimators 100 \
-  --learning-rate 0.1
+python src/train.py --bucket ltr-models-frp --key data/ltr_training_data.csv --output-dir ./models --n-estimators 100 --learning-rate 0.1
 ```
 
 **Expected Output:**
 ```
 [INFO] Loading data from s3://ltr-models-frp/data/ltr_training_data.csv
-[INFO] Successfully loaded 5000 rows
+[INFO] Successfully loaded 10000 rows
 [INFO] Preprocessing data for ranker...
-[INFO] Number of query groups: 250
+[INFO] Number of query groups: 3168
 [INFO] Training model...
 [INFO] Training completed successfully!
 [INFO] Model saved at: ./models/model.json
@@ -123,15 +120,18 @@ python src/inference.py --model-path ./models/model.json
 
 **Sample Output:**
 ```
-RANKED RESULTS
-==============================================================================
-1. Designer Handbag          | Score: 2.3451 | Price: $599.99
-2. Vintage Watch             | Score: 2.1203 | Price: $299.99
-3. Sunglasses                | Score: 1.8922 | Price: $199.99
-4. Running Shoes             | Score: 1.6543 | Price: $129.99
-5. Leather Wallet            | Score: 1.4201 | Price: $79.99
+Rank   Item Name                      Category        Price      LTR Score    Retrieval Score
+------------------------------------------------------------------------------------------
+1      Luxury Briefcase               Bags            $99.99     0.0867       0.83
+2      Premium Sunglasses             Accessories     $49.99     -0.0414      0.87
+3      Vintage Rolex Watch            Watches         $89.99     -0.0662      0.92
+4      Silk Tie Set                   Accessories     $79.99     -0.0662      0.85
+5      Designer Leather Wallet        Accessories     $29.99     -0.1316      0.89
 ```
-
+### 4. Run Full Demo (3 minutes)
+```bash
+python examples/demo_pipeline.py
+```
 ---
 
 ## 🐳 Docker Deployment
