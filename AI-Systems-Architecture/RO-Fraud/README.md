@@ -9,16 +9,6 @@ Increased fraudulent claim identification accuracy by 35%, reduced agent review 
 
 ```mermaid
 graph TD
-    A[ClaimRequest] --> B[FastAPI Endpoint]
-    B --> C[Vector Search: FAISS / Vertex AI]
-    C -.-> |Top-3 Similar Historical Claims| D[Context Aggregation]
-    D --> E[LangChain PromptTemplate + Instructions]
-    E --> F[Google Vertex AI: Gemini Pro]
-    F --> G[JSON Output via PydanticOutputParser]
-    G --> H[RiskSummaryResponse]
-```
-```mermaid
-graph TD
     A[Customer Claim Payload\nJSON] -->|POST Request| B(FastAPI Endpoint)
     B --> C{Fraud Pattern Retriever}
     C -->|Embed text| D[(Vertex AI Vector Search\nHistorical Fraud DB)]
