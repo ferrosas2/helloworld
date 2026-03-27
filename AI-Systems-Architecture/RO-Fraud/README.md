@@ -30,7 +30,7 @@ graph TD
         I -->|Return to Agent UI| J[Operations Dashboard]
     end
     
-    classDef GCP fill:#e8eaed,stroke:#4285f4,stroke-width:2px;
+    classDef GCP fill:#e3f2fd,stroke:#4285f4,stroke-width:2px;
     class D,G,O4 GCP;
 ```
 ## Stack Summary
