@@ -29,7 +29,7 @@ graph TD
         F -->|Automated Alerts| H[Operations / Pricing Team]
     end
     
-    classDef BQ fill:#e8eaed,stroke:#4285f4,stroke-width:2px;
+    classDef BQ fill:#263238,stroke:#4285f4,stroke-width:2px;
     class A,B,C BQ;
 ```
 
