@@ -32,7 +32,7 @@ Increased fraudulent claim identification accuracy by 35%, reduced agent review 
         L -->|Structured Risk Score| G
     end
     
-    classDef GCP fill:#e8eaed,stroke:#4285f4,stroke-width:2px;
+    classDef GCP fill:#263238,stroke:#4285f4,stroke-width:2px;
     class F,K GCP;
 ```
 ## Stack Summary
