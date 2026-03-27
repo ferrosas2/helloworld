@@ -32,6 +32,31 @@ graph TD
     
     classDef GCP fill:#263238,stroke:#4285f4,stroke-width:2px;
     class D,G,O4 GCP;
+
+    graph TD
+    %% Offline Pipeline
+    subgraph Offline Ingestion Pipeline [Golden Dataset Creation]
+        A[(Raw Unstructured Claims\nData Lake)] --> B[Pandas / Python Loader]
+        B --> C{Regex PII Sanitization}
+        C --> D[LangChain Text Splitter]
+        D --> E[Embedding Generation]
+        E --> F[(Vertex AI Vector Search\nFraud Knowledge Base)]
+    end
+
+    %% Online API
+    subgraph Online RAG API [Real-Time Inference]
+        G[Agent / Operations UI] -->|POST /analyze-claim| H(FastAPI Application)
+        H --> I{Similarity Search}
+        I -->|Query| F
+        F -->|Top-K Historical Frauds| I
+        I --> J[LangChain Strict Prompt Template]
+        J --> K[Google Gemini Pro]
+        K --> L[Pydantic JSON Parser]
+        L -->|Structured Risk Score| G
+    end
+    
+    classDef GCP fill:#e8eaed,stroke:#4285f4,stroke-width:2px;
+    class F,K GCP;
 ```
 ## Stack Summary
 - **Backend Framework**: FastAPI (Strict typing, async, OpenAPI compatible)
