@@ -7,13 +7,22 @@ This repository demonstrates predictive analytics and time-series forecasting us
 ## Architecture
 
 ```mermaid
-graph LR
-    A[Enterprise Data Warehouse<br/>BigQuery] -->|Training| B(BQML: ARIMA_PLUS)
-    B -->|Explainability| C[ML.EXPLAIN_FORECAST]
-    D[Python Orchestrator] -.->|API| A
-    D -.->|API| B
-    D -.->|API| C
-    C -->|Output| E[Business Stakeholder Reports]
+graph TD
+    subgraph Google Cloud Platform
+        A[(Enterprise Data Warehouse\nBigQuery Tabular Data)] -->|SQL: CREATE MODEL| B(BigQuery ML Engine)
+        B -->|ARIMA_PLUS Model| C{Time-Series Forecasting}
+    end
+
+    subgraph Analytics & Governance
+        C -->|ML.DETECT_ANOMALIES| D[Price/Demand Anomaly Flags]
+        C -->|ML.EXPLAIN_FORECAST| E[Model Explainability XAI]
+    end
+
+    subgraph Python MLOps Layer
+        F[Python BQ Client / Orchestrator] -->|Triggers Jobs| B
+        D --> F
+        E --> F
+    end
 ```
 
 ## Setup & Execution
