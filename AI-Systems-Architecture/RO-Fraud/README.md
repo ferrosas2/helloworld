@@ -9,19 +9,29 @@ Increased fraudulent claim identification accuracy by 35%, reduced agent review 
 
 ```mermaid
 graph TD
-    A[Customer Claim Payload\nJSON] -->|POST Request| B(FastAPI Endpoint)
-    B --> C{Fraud Pattern Retriever}
-    C -->|Embed text| D[(Vertex AI Vector Search\nHistorical Fraud DB)]
-    D -->|Top-K Similar Claims| C
-    C --> E[Risk Analyzer Module]
-    E -->|Inject Context & Claim| F(LangChain Prompt Template)
-    F -->|Strict JSON Instructions| G[Google Gemini Pro]
-    G -->|Extract Risk Factors| H[Pydantic Output Parser]
-    H --> I[Risk Summary Response\nScore & Factors]
-    I -->|Return to Agent UI| J[Operations Dashboard]
+    subgraph Offline Data Pipeline
+        O1[(Raw Historical Claims Data)] -->|Pandas| O2[Regex PII Sanitization]
+        O2 -->|RecursiveCharSplitter| O3[Text Chunking]
+        O3 -->|VertexAIEmbeddings| O4[Generate Embeddings]
+        O4 --> O5[(Golden Dataset: Vector DB)]
+    end
+
+    subgraph Online RAG API
+        A[Customer Claim Payload\nJSON] -->|POST Request| B(FastAPI Endpoint)
+        B --> C{Fraud Pattern Retriever}
+        C -->|Embed text| D[(Vertex AI Vector Search\ / FAISS)]
+        O5 -.->|Powers| D
+        D -->|Top-K Similar Claims| C
+        C --> E[Risk Analyzer Module]
+        E -->|Inject Context & Claim| F(LangChain Prompt Template)
+        F -->|Strict JSON Instructions| G[Google Gemini Pro]
+        G -->|Extract Risk Factors| H[Pydantic Output Parser]
+        H --> I[Risk Summary Response\nScore & Factors]
+        I -->|Return to Agent UI| J[Operations Dashboard]
+    end
     
     classDef GCP fill:#e8eaed,stroke:#4285f4,stroke-width:2px;
-    class D,G GCP;
+    class D,G,O4 GCP;
 ```
 ## Stack Summary
 - **Backend Framework**: FastAPI (Strict typing, async, OpenAPI compatible)
