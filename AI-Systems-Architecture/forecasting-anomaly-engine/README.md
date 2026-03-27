@@ -23,6 +23,14 @@ graph TD
         D --> F
         E --> F
     end
+
+    subgraph Business Operations
+        F -->|Actionable Insights| G[CFO & Directors Dashboard]
+        F -->|Automated Alerts| H[Operations / Pricing Team]
+    end
+    
+    classDef BQ fill:#e8eaed,stroke:#4285f4,stroke-width:2px;
+    class A,B,C BQ;
 ```
 
 ## Setup & Execution
