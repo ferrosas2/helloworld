@@ -4,18 +4,24 @@ from langchain.prompts import PromptTemplate
 from langchain_google_vertexai import VertexAI
 from langchain.output_parsers import PydanticOutputParser
 from src.schema import RiskSummaryResponse
+from src.config import settings
 
 logger = logging.getLogger(__name__)
 
 class RiskAnalyzerLLM:
     """
-    LLM generation class handling communication with Google Vertex AI (Gemini Pro).
+    LLM generation class handling communication with Google Vertex AI (Gemini).
     Implements a strict Pydantic output parser for reliable JSON schema enforcement.
     """
     def __init__(self):
-        logger.info("Initializing RiskAnalyzerLLM with Google Vertex AI (Gemini)")
-        # Initialize Gemini via Vertex AI. Assumes application credentials are set up.
-        self.llm = VertexAI(model_name="gemini-pro", temperature=0.0)
+        logger.info(f"Initializing RiskAnalyzerLLM with Google Vertex AI (gemini-1.5-pro) in project '{settings.GCP_PROJECT_ID}' and region '{settings.GCP_REGION}'")
+        # Initialize Gemini via Vertex AI targeting user's live GCP resources with ADC.
+        self.llm = VertexAI(
+            model_name="gemini-1.5-pro",
+            project=settings.GCP_PROJECT_ID,
+            location=settings.GCP_REGION,
+            temperature=0.0
+        )
         self.parser = PydanticOutputParser(pydantic_object=RiskSummaryResponse)
         
         self.prompt = PromptTemplate(

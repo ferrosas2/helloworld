@@ -4,20 +4,40 @@ from urllib.error import URLError
 from src.schema import ClaimRequest, RiskSummaryResponse
 from src.retrieval import FraudPatternRetriever
 from src.generation import RiskAnalyzerLLM
+from src.config import settings
 import uvicorn
 
-logging.basicConfig(level=logging.INFO)
+# Configure professional standard logging for GCP operations and requests
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - [%(levelname)s] - %(name)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
+
+# Validate configuration loading on bootstrap
+logger.info("=========================================================")
+logger.info("Initializing Live GCP RO-Fraud RAG API System Bootstrap")
+logger.info(f"Targeting Google Cloud Project: {settings.GCP_PROJECT_ID}")
+logger.info(f"Deployment Region:             {settings.GCP_REGION}")
+logger.info(f"Vector Index ID:               {settings.VERTEX_INDEX_ID}")
+logger.info(f"Vector Endpoint ID:            {settings.VERTEX_ENDPOINT_ID}")
+logger.info(f"Google Cloud Storage Bucket:   {settings.GCS_BUCKET_NAME}")
+logger.info("=========================================================")
 
 app = FastAPI(
     title="AI-Powered Fraud & Risk Analysis Engine",
-    description="Sanitized reference architecture for AI-assisted fraud detection using RAG.",
+    description="Sanitized reference architecture for AI-assisted fraud detection using RAG on live GCP services.",
     version="1.0.0"
 )
 
-# Initialize dependencies on startup
-retriever = FraudPatternRetriever()
-analyzer = RiskAnalyzerLLM()
+# Initialize dependencies on startup securely to fail-fast if GCP resources are unreachable
+try:
+    retriever = FraudPatternRetriever()
+    analyzer = RiskAnalyzerLLM()
+    logger.info("GCP backend clients and models initialized successfully.")
+except Exception as init_err:
+    logger.critical(f"FATAL: Application bootstrap failed while preparing GCP connectivity: {str(init_err)}")
+    raise init_err
 
 @app.post("/api/v1/analyze-claim", response_model=RiskSummaryResponse)
 async def analyze_claim_endpoint(request: ClaimRequest):

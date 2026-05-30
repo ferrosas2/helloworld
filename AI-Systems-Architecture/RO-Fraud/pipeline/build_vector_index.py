@@ -1,3 +1,4 @@
+import json
 import logging
 import re
 import os
@@ -6,15 +7,32 @@ from typing import List
 
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import FAISS
 from langchain_google_vertexai import VertexAIEmbeddings
+from google.cloud import storage
 
-# Configure professional standard logging
+# Ensure we import the settings correctly
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.config import settings
+
+# Configure professional standard logging for GCP Operations
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - [%(levelname)s] - %(name)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+# ====================================================================================
+# OPERATIONAL NOTE:
+# The actual creation of a Vertex AI Vector Search Index (formerly Matching Engine)
+# and its eventual deployment to an Endpoint in the Google Cloud Console
+# typically takes approximately 45 minutes. 
+# This ingestion script executes the prerequisite steps:
+# 1. Loads, sanitizes, and chunks raw claims data.
+# 2. Generates semantic embeddings with VertexAIEmbeddings (using text-embedding-004).
+# 3. Formats the data into the strict JSONL format required by Vertex AI Vector Search.
+# 4. Uploads these embeddings to a secure GCS bucket for indexing.
+# ====================================================================================
 
 def load_raw_data() -> pd.DataFrame:
     """Mock loading raw unstructured historical claims data."""
@@ -30,6 +48,7 @@ def load_raw_data() -> pd.DataFrame:
 
 def clean_text_with_regex(text: str) -> str:
     """Removes PII (SSNs, phone numbers) and standardizes formatting for privacy."""
+    logger.info("Applying strict regex-based preprocessing rules to sanitize PII.")
     # Redact SSN-like patterns (XXX-XX-XXXX)
     text = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[REDACTED_SSN]', text)
     # Redact Phone-like patterns (XXX-XXX-XXXX)
@@ -54,37 +73,80 @@ def create_document_chunks(df: pd.DataFrame) -> List[Document]:
         combined_text = f"Claim Context: {cleaned_text}\nResolution Notes: {row['resolution_notes']}"
         
         chunks = splitter.split_text(combined_text)
-        for chunk in chunks:
+        for i, chunk in enumerate(chunks):
             doc = Document(
                 page_content=chunk,
-                metadata={"claim_id": row["claim_id"]}
+                metadata={
+                    "claim_id": row["claim_id"],
+                    "chunk_index": i
+                }
             )
             documents.append(doc)
             
     logger.info(f"Successfully created {len(documents)} document chunks from {len(fraud_df)} fraudulent claims.")
     return documents
 
-def build_and_save_index(documents: List[Document], output_path: str):
-    """Generates embeddings and builds a FAISS index, saving it to disk."""
-    logger.info("Initializing VertexAIEmbeddings model...")
-    try:
-        # In production this will leverage actual GCP credentials via ADC
-        embeddings = VertexAIEmbeddings(model_name="textembedding-gecko@003")
-    except Exception as e:
-        logger.warning(f"Could not init VertexAIEmbeddings (mocking locally for demo without GCP ADC): {e}")
-        from langchain_community.embeddings import FakeEmbeddings
-        embeddings = FakeEmbeddings(size=768)
-        
-    logger.info("Building vector space using FAISS...")
-    vectorstore = FAISS.from_documents(documents, embeddings)
+def generate_gcp_embeddings(documents: List[Document]) -> List[List[float]]:
+    """Generates embeddings using VertexAIEmbeddings model 'text-embedding-004'."""
+    logger.info("Initializing connection to Vertex AI Embeddings (model: text-embedding-004)...")
+    embeddings_model = VertexAIEmbeddings(
+        model_name="text-embedding-004",
+        project=settings.GCP_PROJECT_ID,
+        location=settings.GCP_REGION
+    )
     
-    # Ensure directory exists before saving
+    texts = [doc.page_content for doc in documents]
+    logger.info(f"Generating vectors for {len(texts)} document chunks via Vertex AI Embeddings API.")
+    embeddings_list = embeddings_model.embed_documents(texts)
+    logger.info(f"Generated {len(embeddings_list)} embeddings successfully.")
+    return embeddings_list
+
+def save_to_strict_jsonl(documents: List[Document], embeddings: List[List[float]], output_path: str):
+    """
+    Format output into strict JSONL format required by Vertex AI Vector Search:
+    {"id": "...", "embedding": [...], "restricts": [...]}
+    """
+    logger.info(f"Formatting embeddings and metadata into strict JSONL for Vertex Vector Search...")
+    
+    # Ensure directory exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    vectorstore.save_local(output_path)
-    logger.info(f"Vector Index established and serialized to {output_path}")
+    
+    with open(output_path, "w", encoding="utf-8") as f:
+        for i, (doc, embedding) in enumerate(zip(documents, embeddings)):
+            claim_id = doc.metadata.get("claim_id", f"unknown_{i}")
+            chunk_idx = doc.metadata.get("chunk_index", 0)
+            unique_id = f"{claim_id}_chunk_{chunk_idx}"
+            
+            item = {
+                "id": unique_id,
+                "embedding": embedding,
+                "restricts": [
+                    {
+                        "namespace": "claim_id",
+                        "allow": [claim_id]
+                    }
+                ]
+            }
+            f.write(json.dumps(item) + "\n")
+            
+    logger.info(f"Successfully serialized structured embeddings JSONL to: {output_path}")
+
+def upload_to_gcs(local_file_path: str, bucket_name: str, destination_blob_name: str):
+    """Uploads the computed JSONL file into the specified GCS bucket."""
+    logger.info(f"Uploading local file {local_file_path} to Google Cloud Storage (Bucket: {bucket_name}, Path: {destination_blob_name})")
+    try:
+        storage_client = storage.Client(project=settings.GCP_PROJECT_ID)
+        bucket = storage_client.bucket(bucket_name)
+        blob = bucket.blob(destination_blob_name)
+        
+        blob.upload_from_filename(local_file_path)
+        logger.info(f"File uploaded successfully to gs://{bucket_name}/{destination_blob_name}")
+    except Exception as e:
+        logger.error(f"Failed to upload {local_file_path} to GCS: {str(e)}")
+        raise
 
 if __name__ == "__main__":
-    logger.info("=== START: Offline Data Ingestion Pipeline ===")
+    logger.info("=== START: Offline Data Ingestion Pipeline (Production GCP Upgrade) ===")
     
     # Step 1: Load Data
     raw_df = load_raw_data()
@@ -92,11 +154,36 @@ if __name__ == "__main__":
     # Step 2: Clean, chunk and prepare documents
     docs = create_document_chunks(raw_df)
     
-    # Step 3: Embed and save the Golden Dataset to disk
-    # Save relatively in ../data/fraud_vector_db inside RO-Fraud/
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    db_path = os.path.join(base_dir, "..", "data", "fraud_vector_db")
+    # Step 3: Embed document chunks using real Vertex AI Text Embedding 004
+    embeddings_list = generate_gcp_embeddings(docs)
     
-    build_and_save_index(docs, db_path)
+    # Step 4: Format and serialize into strict JSONL format
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    local_jsonl_path = os.path.join(base_dir, "..", "data", "vertex_vectors.jsonl")
+    save_to_strict_jsonl(docs, embeddings_list, local_jsonl_path)
+    
+    # Step 5: Upload the Golden Dataset embeddings file to Google Cloud Storage
+    gcs_blob_path = "vector_search/vertex_vectors.jsonl"
+    upload_to_gcs(
+        local_file_path=local_jsonl_path,
+        bucket_name=settings.GCS_BUCKET_NAME,
+        destination_blob_name=gcs_blob_path
+    )
+    
+    # Optional metadata map download/upload for local mapping (highly recommended in enterprise)
+    metadata_map_path = os.path.join(base_dir, "..", "data", "metadata_map.json")
+    metadata_map = {
+        f"{doc.metadata['claim_id']}_chunk_{doc.metadata['chunk_index']}": doc.page_content
+        for doc in docs
+    }
+    with open(metadata_map_path, "w", encoding="utf-8") as mf:
+        json.dump(metadata_map, mf, indent=2)
+    upload_to_gcs(
+        local_file_path=metadata_map_path,
+        bucket_name=settings.GCS_BUCKET_NAME,
+        destination_blob_name="vector_search/metadata_map.json"
+    )
+    
+    logger.info("=== END: Offline Data Ingestion Pipeline (GCP Upgrade Finished) ===")
     
     logger.info("=== COMPLETE: Offline Data Ingestion Pipeline ===")

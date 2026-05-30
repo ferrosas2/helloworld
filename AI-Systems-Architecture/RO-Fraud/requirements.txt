@@ -3,4 +3,6 @@ uvicorn
 pydantic
 langchain
 langchain-google-vertexai
-faiss-cpu
+google-cloud-aiplatform
+google-cloud-storage
+pandas
