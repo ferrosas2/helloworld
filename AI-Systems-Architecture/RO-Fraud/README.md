@@ -33,11 +33,20 @@ Increased fraudulent claim identification accuracy by 35%, reduced agent review 
     classDef GCP fill:#263238,stroke:#4285f4,stroke-width:2px;
     class F,K GCP;
 ```
+
+## Enterprise Governance & MLOps
+Designed strictly for Tier-1 financial compliance and Responsible AI principles:
+
+- Data Security: Strict Regex-based offline preprocessing to sanitize and strip Personally Identifiable Information (PII) before cloud embedding.
+- Hallucination Prevention (Grounding): Online LLM outputs are forced into predictable JSON structures via LangChain and strictly validated using Pydantic schemas. The model is prompted to explicitly cite chunks from the Vector DB.
+- Infrastructure as Code (IaC): In production, GCP resources (Vertex endpoints, Cloud Run) are provisioned and managed via Terraform.
+
 ## Stack Summary
-- **Backend Framework**: FastAPI (Strict typing, async, OpenAPI compatible)
-- **Generative AI Engine**: Google Vertex AI (Gemini Pro) via LangChain
-- **Vector Search / RAG**: FAISS (Local mock replacing Vertex AI Vector Search)
-- **Data Validation**: Pydantic
+- Backend Framework: FastAPI (Strict typing, async, OpenAPI compatible)
+- Generative AI Engine: Google Vertex AI (Gemini Pro) via LangChain
+- Vector Search / RAG: FAISS (Note: Used locally here to mock Vertex AI Matching Engine / Vector Search for scalable GCP production deployment)
+- Data Validation: Pydantic
+- Containerization & Deployment: Docker, Cloud Run
 
 ## Local Setup
 
