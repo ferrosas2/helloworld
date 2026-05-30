@@ -1,15 +1,13 @@
 # AI-Powered Fraud & Risk Analysis Engine (RAG)
 
-*Note: This repository is a sanitized reference architecture intended to demonstrate enterprise coding standards and architecture patterns.*
+*Note: This repository is a sanitized reference architecture intended to demonstrate enterprise coding standards, GCP data pipelines, and MLOps patterns.*
 
 ## Business Impact
-Increased fraudulent claim identification accuracy by 35%, reduced agent review time by 50%, and significantly reduced financial losses.
+Increased fraudulent claim identification accuracy by 35%, reduced agent review time by 50%, and significantly reduced financial losses for a Tier-1 financial services client.
 
 ## Architecture Flow
 
 ```mermaid
-
-
     graph TD
     %% Offline Pipeline
     subgraph Offline Ingestion Pipeline [Golden Dataset Creation]
