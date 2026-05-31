@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env
+venv/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# VSCode
+.vscode/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# General
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Ignore large data and model files
+*.h5
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.pb
+*.joblib
+*.npy
+*.npz
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.zip
+*.tar.gz
+*.tar
+*.gz
+*.7z
+*.rar
+
+# Ignore environment and credentials
+.envrc
+secrets.env
+
+# Ignore build outputs
+build/
+dist/
+*.egg-info/
+
+# Ignore LFS pointers
+.gitattributes
