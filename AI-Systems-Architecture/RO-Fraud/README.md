@@ -84,24 +84,37 @@ The service reads its configuration from environment variables (or a local `.env
 
 ## Local Setup & Development
 
-1. Install dependencies:
+1. Create and activate an isolated virtual environment (recommended — keeps the
+   project's pinned dependencies separate from any global/Anaconda packages):
+   ```powershell
+   python -m venv .venv
+   .venv\Scripts\activate
+   ```
+   To leave the environment later, run `deactivate`.
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-2. Authenticate Application Default Credentials (ADC):
+3. Authenticate Application Default Credentials (ADC):
    ```bash
    gcloud auth application-default login
    ```
-3. Create a local `.env` (gitignored) with the variables from the table above.
-4. Run the API locally:
+4. Create a local `.env` (gitignored) with the variables from the table above.
+5. Run the API locally:
    ```bash
    uvicorn api.main:app --reload
    ```
-5. Run the tests:
+6. Run the tests:
    ```bash
-   pip install pytest pytest-asyncio httpx
+   pip install pytest pytest-asyncio "httpx<0.28"
    pytest tests/ -q
    ```
+   > `httpx` is pinned below 0.28 for tests because Starlette's `TestClient`
+   > relies on the `app=` shortcut that newer httpx removed.
+
+> **Python version**: the container targets Python 3.10 (see the Dockerfile). The app
+> also runs on 3.9 locally; Google client libraries print a harmless 3.9 deprecation
+> warning that does not appear in the deployed container.
 
 ---
 
