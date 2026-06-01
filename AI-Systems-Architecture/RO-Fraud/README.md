@@ -70,7 +70,13 @@ the API, testing the endpoints, and tearing everything down to stop billing.
 > `.env` file (gitignored) — never commit project IDs, bucket names, or endpoint IDs.
 
 ### Configuration
-The service reads its configuration from environment variables (or a local `.env`):
+The service reads its configuration from environment variables (or a local `.env`).
+Copy the provided template and fill in your real values:
+
+```bash
+cp .env.example .env     # macOS/Linux
+copy .env.example .env   # Windows cmd
+```
 
 | Variable             | Description                                  |
 | -------------------- | -------------------------------------------- |
@@ -79,6 +85,9 @@ The service reads its configuration from environment variables (or a local `.env
 | `GCS_BUCKET_NAME`    | Bucket holding the embedding vectors         |
 | `VERTEX_INDEX_ID`    | Vertex AI Vector Search index ID             |
 | `VERTEX_ENDPOINT_ID` | Vertex AI Vector Search index endpoint ID    |
+
+> The real `.env` is gitignored and must never be committed. Only `.env.example`
+> (placeholders only) lives in the repo.
 
 ---
 
@@ -99,7 +108,10 @@ The service reads its configuration from environment variables (or a local `.env
    ```bash
    gcloud auth application-default login
    ```
-4. Create a local `.env` (gitignored) with the variables from the table above.
+4. Create your local `.env` from the template and fill in real values:
+   ```bash
+   copy .env.example .env
+   ```
 5. Run the API locally:
    ```bash
    uvicorn api.main:app --reload
