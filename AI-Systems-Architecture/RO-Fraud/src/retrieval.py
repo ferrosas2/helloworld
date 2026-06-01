@@ -25,34 +25,22 @@ class FraudPatternRetriever:
             logger.error(f"Failed to initialize Vertex AI Embeddings: {str(e)}")
             raise
         
-        # Initialize the production Vector Search client
+        # Initialize the production Vector Search client.
+        # langchain-google-vertexai exposes the store via `from_components`, which
+        # expects `project_id` and `region` (not `project`/`location`).
         try:
-            # We attempt standard VectorSearchVectorStore initialization
-            self.vector_store = VectorSearchVectorStore(
-                project=settings.GCP_PROJECT_ID,
-                location=settings.GCP_REGION,
+            self.vector_store = VectorSearchVectorStore.from_components(
+                project_id=settings.GCP_PROJECT_ID,
+                region=settings.GCP_REGION,
+                gcs_bucket_name=settings.GCS_BUCKET_NAME,
                 index_id=settings.VERTEX_INDEX_ID,
                 endpoint_id=settings.VERTEX_ENDPOINT_ID,
                 embedding=self.embeddings,
-                gcs_bucket_name=settings.GCS_BUCKET_NAME
             )
             logger.info("Successfully established connection to Vertex AI VectorSearchVectorStore.")
         except Exception as init_err:
-            logger.warning(f"Standard initialization failed ({init_err}). Attempting from_components fallback...")
-            try:
-                # Fallback to the from_components construct which is common in older langchain_google_vertexai
-                self.vector_store = VectorSearchVectorStore.from_components(
-                    project=settings.GCP_PROJECT_ID,
-                    location=settings.GCP_REGION,
-                    index_id=settings.VERTEX_INDEX_ID,
-                    endpoint_id=settings.VERTEX_ENDPOINT_ID,
-                    embedding=self.embeddings,
-                    gcs_bucket_name=settings.GCS_BUCKET_NAME
-                )
-                logger.info("Successfully created VectorSearchVectorStore using from_components.")
-            except Exception as fallback_err:
-                logger.error(f"All initialization attempts for VectorSearchVectorStore failed. Init error: {init_err}. Fallback error: {fallback_err}")
-                raise
+            logger.error(f"Failed to initialize VectorSearchVectorStore: {str(init_err)}")
+            raise
 
     def get_similar_historical_claims(self, claim_text: str) -> List[str]:
         """
