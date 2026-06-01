@@ -5,10 +5,11 @@ pydantic==2.5.3
 pydantic-settings==2.1.0
 
 # LangChain and AI
-langchain==0.1.6
-langchain-google-vertexai==0.1.0
-langchain-core==0.1.20
-langchain-text-splitters==0.0.1
+# Use compatible ranges within the 0.1.x line. langchain-core and
+# langchain-text-splitters are resolved automatically as dependencies of langchain,
+# so they are intentionally not pinned here to avoid version conflicts.
+langchain>=0.1.16,<0.2
+langchain-google-vertexai>=0.1.0,<0.2
 
 # Google Cloud Platform
 google-cloud-aiplatform==1.42.1
