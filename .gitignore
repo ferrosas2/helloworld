@@ -75,3 +75,6 @@ dist/
 # Local environment / terraform vars (safety: never commit real values)
 *.tfvars
 .env
+
+# Generated embedding/vector artifacts (regenerable pipeline output)
+AI-Systems-Architecture/RO-Fraud/data/

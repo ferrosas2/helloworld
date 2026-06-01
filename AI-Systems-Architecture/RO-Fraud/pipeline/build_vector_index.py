@@ -157,20 +157,26 @@ if __name__ == "__main__":
     # Step 3: Embed document chunks using real Vertex AI Text Embedding 004
     embeddings_list = generate_gcp_embeddings(docs)
     
-    # Step 4: Format and serialize into strict JSONL format
+    # Step 4: Format and serialize into the JSON-Lines format Vertex expects.
+    # NOTE: Vertex AI Vector Search requires a `.json` extension (it parses the
+    # content as JSON-Lines regardless), so the file is named accordingly.
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    local_jsonl_path = os.path.join(base_dir, "..", "data", "vertex_vectors.jsonl")
+    local_jsonl_path = os.path.join(base_dir, "..", "data", "vertex_vectors.json")
     save_to_strict_jsonl(docs, embeddings_list, local_jsonl_path)
     
-    # Step 5: Upload the Golden Dataset embeddings file to Google Cloud Storage
-    gcs_blob_path = "vector_search/vertex_vectors.jsonl"
+    # Step 5: Upload the Golden Dataset embeddings file to Google Cloud Storage.
+    # This file lives under `vector_search/`, which is the folder passed to the
+    # index as `contentsDeltaUri`. Only vector-data files may live in that folder.
+    gcs_blob_path = "vector_search/vertex_vectors.json"
     upload_to_gcs(
         local_file_path=local_jsonl_path,
         bucket_name=settings.GCS_BUCKET_NAME,
         destination_blob_name=gcs_blob_path
     )
     
-    # Optional metadata map download/upload for local mapping (highly recommended in enterprise)
+    # Optional metadata map for local chunk-id -> text lookups. This is NOT vector
+    # data, so it is uploaded OUTSIDE the `vector_search/` folder to avoid the index
+    # ingestion trying (and failing) to parse it as embeddings.
     metadata_map_path = os.path.join(base_dir, "..", "data", "metadata_map.json")
     metadata_map = {
         f"{doc.metadata['claim_id']}_chunk_{doc.metadata['chunk_index']}": doc.page_content
@@ -181,7 +187,7 @@ if __name__ == "__main__":
     upload_to_gcs(
         local_file_path=metadata_map_path,
         bucket_name=settings.GCS_BUCKET_NAME,
-        destination_blob_name="vector_search/metadata_map.json"
+        destination_blob_name="metadata/metadata_map.json"
     )
     
     logger.info("=== END: Offline Data Ingestion Pipeline (GCP Upgrade Finished) ===")
