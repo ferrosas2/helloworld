@@ -48,7 +48,27 @@ python pipeline/build_vector_index.py
 ```
 
 Then in the **Cloud Console → Vertex AI → Vector Search**:
-1. Create Index — dimensions `768`, distance `DOT_PRODUCT_DISTANCE`, source `gs://YOUR_BUCKET_NAME/vector_search/vertex_vectors.jsonl` (~45 min).
+1. Create Index with these settings:
+
+   | Field                         | Value                        | Notes                                                              |
+   | ----------------------------- | ---------------------------- | ------------------------------------------------------------------ |
+   | Dimensions                    | `768`                        | Matches `text-embedding-004` output                                |
+   | Approximate neighbors count   | `150`                        | Candidate pool for the approximate stage before exact reranking    |
+   | Distance measure              | `Dot product distance`       | Recommended for these embeddings                                   |
+   | Algorithm type                | `Tree-AH`                    | Approximate nearest neighbor                                       |
+   | Update method                 | `Batch`                      | Index is built from the GCS JSONL file                             |
+   | Shard size                    | `Small`                      | Fine for this demo data volume                                     |
+   | Data source (Cloud Storage)   | `gs://YOUR_BUCKET_NAME/vector_search/` | Folder containing the `vertex_vectors.jsonl` file        |
+
+   Index creation takes ~45 min.
+
+   > **Note on `Approximate neighbors count`**: this is the number of candidate
+   > neighbors the Tree-AH approximate search gathers before exact distance
+   > reranking returns the final top-k. It must be larger than the query `k`
+   > (the app queries with `k=3`). `150` is the conventional default and is sized
+   > for a real dataset; with the small sample set it simply returns all available
+   > vectors.
+
 2. Deploy the index to a new endpoint (~15 min).
 3. Note the **Index ID** and **Endpoint ID**:
    ```bash
