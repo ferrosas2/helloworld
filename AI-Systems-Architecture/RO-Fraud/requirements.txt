@@ -1,8 +1,28 @@
-fastapi
-uvicorn
-pydantic
-langchain
-langchain-google-vertexai
-google-cloud-aiplatform
-google-cloud-storage
-pandas
+# Core API Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# LangChain and AI
+langchain==0.1.6
+langchain-google-vertexai==0.1.0
+langchain-core==0.1.20
+langchain-text-splitters==0.0.1
+
+# Google Cloud Platform
+google-cloud-aiplatform==1.42.1
+google-cloud-storage==2.14.0
+google-auth==2.27.0
+
+# Data Processing
+pandas==2.2.0
+
+# HTTP Client (for health checks)
+requests==2.31.0
+
+# Testing (dev dependencies - install separately for CI/CD)
+# pytest==8.0.0
+# pytest-cov==4.1.0
+# pytest-asyncio==0.23.4
+# httpx==0.26.0

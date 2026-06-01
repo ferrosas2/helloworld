@@ -49,81 +49,73 @@ Designed strictly for Tier-1 financial compliance and Responsible AI principles:
 - **Cloud Infrastructure**: Google Cloud Storage, Artifact Registry, and Google Cloud Run
 - **IaC & Automation**: Terraform (>= 1.3.0)
 
-## Production Deployment & Operational Setup
+## Deployment
 
+The fastest way to get a working demo on GCP is the source-based Cloud Run deploy
+(no local Docker build, no Terraform required):
 
-### 1. Provision Infrastructure with Terraform
-Navega a la carpeta `infrastructure/` y despliega los servicios seguros en GCP:
-```powershell
-cd infrastructure
-terraform init
-terraform apply `
-   -var="project_id=YOUR_GCP_PROJECT_ID" `
-   -var="gcs_bucket_name=YOUR_UNIQUE_GCS_BUCKET_NAME" `
-   -var="vertex_index_id=YOUR_VERTEX_INDEX_ID" `
-   -var="vertex_endpoint_id=YOUR_VERTEX_ENDPOINT_ID"
+```bash
+gcloud run deploy ro-fraud-service \
+  --source . \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --set-env-vars "GCP_PROJECT_ID=YOUR_PROJECT_ID,GCP_REGION=us-central1,GCS_BUCKET_NAME=YOUR_BUCKET_NAME,VERTEX_INDEX_ID=YOUR_INDEX_ID,VERTEX_ENDPOINT_ID=YOUR_ENDPOINT_ID"
 ```
 
-### 2. Construye y sube la imagen Docker a Artifact Registry
-Asegúrate de tener el repositorio creado por Terraform y autenticación activa:
-```powershell
-gcloud auth configure-docker us-central1-docker.pkg.dev
-docker build -t us-central1-docker.pkg.dev/YOUR_GCP_PROJECT_ID/ro-fraud-repo/ro-fraud-service:latest .
-docker push us-central1-docker.pkg.dev/YOUR_GCP_PROJECT_ID/ro-fraud-repo/ro-fraud-service:latest
-```
+**See [`docs/DEPLOYMENT_GUIDE.md`](docs/DEPLOYMENT_GUIDE.md)** for the full step-by-step:
+creating the Vertex AI Vector Search index, running the ingestion pipeline, deploying
+the API, testing the endpoints, and tearing everything down to stop billing.
 
-### 3. Configura variables de entorno
-Crea un archivo `.env` en la raíz de `RO-Fraud`:
-```env
-GCP_PROJECT_ID=your-gcp-project-id
-GCP_REGION=us-central1
-GCS_BUCKET_NAME=your-gcs-bucket-name
-VERTEX_INDEX_ID=your-vertex-index-id
-VERTEX_ENDPOINT_ID=your-vertex-endpoint-id
-```
+> All values such as `YOUR_PROJECT_ID` are placeholders. Put real values in a local
+> `.env` file (gitignored) — never commit project IDs, bucket names, or endpoint IDs.
 
-### 4. Ejecuta el pipeline de ingesta
-El pipeline limpia los reclamos, genera vectores y sube el JSONL a GCS:
-```powershell
-python pipeline/build_vector_index.py
-```
-*Nota: Crear o reconstruir un índice de Vertex AI Vector Search desde GCS y desplegarlo puede tomar ~45 minutos.*
+### Configuration
+The service reads its configuration from environment variables (or a local `.env`):
 
-### 5. Despliegue y solución de problemas en Cloud Run
-El contenedor debe exponer el puerto 8080 y lanzar FastAPI con:
-```Dockerfile
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8080"]
-```
-Si Cloud Run falla al iniciar, revisa los logs en el enlace que da el error y asegúrate que la imagen existe y el contenedor arranca correctamente.
+| Variable             | Description                                  |
+| -------------------- | -------------------------------------------- |
+| `GCP_PROJECT_ID`     | Google Cloud project ID                      |
+| `GCP_REGION`         | Region (default `us-central1`)               |
+| `GCS_BUCKET_NAME`    | Bucket holding the embedding vectors         |
+| `VERTEX_INDEX_ID`    | Vertex AI Vector Search index ID             |
+| `VERTEX_ENDPOINT_ID` | Vertex AI Vector Search index endpoint ID    |
 
 ---
 
 ## Local Setup & Development
 
-1. Instala dependencias de producción:
-   ```powershell
+1. Install dependencies:
+   ```bash
    pip install -r requirements.txt
    ```
-2. Autentica tus credenciales de Google (ADC):
-   ```powershell
+2. Authenticate Application Default Credentials (ADC):
+   ```bash
    gcloud auth application-default login
    ```
-3. Inicia la API localmente:
-   ```powershell
+3. Create a local `.env` (gitignored) with the variables from the table above.
+4. Run the API locally:
+   ```bash
    uvicorn api.main:app --reload
    ```
-4. Construye y ejecuta con Docker:
-   ```powershell
-   docker build -t ro-fraud-api .
-   docker run -p 8080:8080 `
-     --env-file .env `
-     -v $HOME/.config/gcloud:/root/.config/gcloud `
-     ro-fraud-api
+5. Run the tests:
+   ```bash
+   pip install pytest pytest-asyncio httpx
+   pytest tests/ -q
    ```
 
 ---
 
-### Notas y mejores prácticas
-- El contenedor debe exponer el puerto 8080 y lanzar FastAPI con Uvicorn en 0.0.0.0:8080.
-- Si tienes errores de arranque en Cloud Run, revisa los logs y asegúrate que la imagen existe y el comando de inicio es correcto.
-- Usa Terraform para gestionar toda la infraestructura y evita cambios manuales en GCP salvo para desbloquear recursos huérfanos.
+## Production Setup (reference)
+
+For a full production deployment, the repo also includes:
+- [`infrastructure/main.tf`](infrastructure/main.tf) — Terraform for GCS, Artifact Registry, a least-privilege service account, and Cloud Run.
+- [`cloudbuild.yaml`](cloudbuild.yaml) — CI/CD pipeline (test → scan → build → deploy).
+- [`docs/COST_OPTIMIZATION.md`](docs/COST_OPTIMIZATION.md) — cost levers and estimates.
+
+These are not required for the simple demo flow above.
+
+### Notes & Best Practices
+- The container exposes port 8080 and launches FastAPI with Uvicorn on `0.0.0.0:8080`.
+- GCP clients are initialized on application startup (lifespan), so the service fails fast with a clear error if Vertex AI or GCS is unreachable.
+- If Cloud Run fails to start, check the logs: `gcloud run services logs read ro-fraud-service --region us-central1`.
+- Use Terraform to manage infrastructure and avoid manual changes in GCP except to unblock orphaned resources.

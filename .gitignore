@@ -66,3 +66,11 @@ dist/
 
 # Ignore LFS pointers
 .gitattributes
+
+# Interview prep notes (LOCAL ONLY - never push to public repo)
+.interview-notes/
+**/.interview-notes/
+
+# Local environment / terraform vars (safety: never commit real values)
+*.tfvars
+.env
