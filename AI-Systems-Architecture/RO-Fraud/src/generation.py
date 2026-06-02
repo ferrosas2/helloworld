@@ -14,13 +14,14 @@ class RiskAnalyzerLLM:
     Implements a strict Pydantic output parser for reliable JSON schema enforcement.
     """
     def __init__(self):
-        logger.info(f"Initializing RiskAnalyzerLLM with Google Vertex AI (gemini-1.5-pro) in project '{settings.GCP_PROJECT_ID}' and region '{settings.GCP_REGION}'")
+        logger.info(f"Initializing RiskAnalyzerLLM with Google Vertex AI ({settings.GEMINI_MODEL}) in project '{settings.GCP_PROJECT_ID}' and region '{settings.GCP_REGION}'")
         # Initialize Gemini via Vertex AI targeting user's live GCP resources with ADC.
         self.llm = VertexAI(
-            model_name="gemini-1.5-pro",
+            model_name=settings.GEMINI_MODEL,
             project=settings.GCP_PROJECT_ID,
             location=settings.GCP_REGION,
-            temperature=0.0
+            temperature=0.0,
+            max_output_tokens=1024
         )
         self.parser = PydanticOutputParser(pydantic_object=RiskSummaryResponse)
         

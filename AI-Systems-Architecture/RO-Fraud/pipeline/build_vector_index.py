@@ -131,6 +131,31 @@ def save_to_strict_jsonl(documents: List[Document], embeddings: List[List[float]
             
     logger.info(f"Successfully serialized structured embeddings JSONL to: {output_path}")
 
+def store_documents_for_retrieval(documents: List[Document], bucket_name: str, prefix: str = "documents"):
+    """
+    Writes each chunk's text to gs://{bucket}/{prefix}/{id} as plain text.
+
+    langchain-google-vertexai's VectorSearchVectorStore uses a GCSDocumentStorage
+    to resolve matched vector IDs back into their original text. It looks for each
+    document at the blob `{prefix}/{id}`. The IDs MUST match exactly the IDs written
+    into the embeddings JSONL (here: `{claim_id}_chunk_{chunk_index}`), otherwise a
+    similarity search returns IDs that cannot be resolved ("not found in document
+    storage").
+    """
+    logger.info(f"Storing {len(documents)} document texts for retrieval under '{prefix}/' ...")
+    storage_client = storage.Client(project=settings.GCP_PROJECT_ID)
+    bucket = storage_client.bucket(bucket_name)
+
+    for i, doc in enumerate(documents):
+        claim_id = doc.metadata.get("claim_id", f"unknown_{i}")
+        chunk_idx = doc.metadata.get("chunk_index", 0)
+        unique_id = f"{claim_id}_chunk_{chunk_idx}"
+
+        blob = bucket.blob(f"{prefix}/{unique_id}")
+        blob.upload_from_string(doc.page_content)
+
+    logger.info(f"Stored document texts to gs://{bucket_name}/{prefix}/")
+
 def upload_to_gcs(local_file_path: str, bucket_name: str, destination_blob_name: str):
     """Uploads the computed JSONL file into the specified GCS bucket."""
     logger.info(f"Uploading local file {local_file_path} to Google Cloud Storage (Bucket: {bucket_name}, Path: {destination_blob_name})")
@@ -173,6 +198,10 @@ if __name__ == "__main__":
         bucket_name=settings.GCS_BUCKET_NAME,
         destination_blob_name=gcs_blob_path
     )
+
+    # Step 5b: Store each chunk's text under `documents/{id}` so the online
+    # VectorSearchVectorStore can resolve matched IDs back into text at query time.
+    store_documents_for_retrieval(docs, settings.GCS_BUCKET_NAME, prefix="documents")
     
     # Optional metadata map for local chunk-id -> text lookups. This is NOT vector
     # data, so it is uploaded OUTSIDE the `vector_search/` folder to avoid the index
