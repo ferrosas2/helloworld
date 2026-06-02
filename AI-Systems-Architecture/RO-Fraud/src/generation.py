@@ -21,7 +21,7 @@ class RiskAnalyzerLLM:
             project=settings.GCP_PROJECT_ID,
             location=settings.GCP_REGION,
             temperature=0.0,
-            max_output_tokens=1024
+            max_output_tokens=2048
         )
         self.parser = PydanticOutputParser(pydantic_object=RiskSummaryResponse)
         
