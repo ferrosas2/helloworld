@@ -25,7 +25,7 @@ Increased fraudulent claim identification accuracy by 35%, reduced agent review 
         I -->|Query| F
         F -->|Top-K Historical Frauds| I
         I --> J[LangChain Strict Prompt Template]
-        J --> K[Google Gemini 1.5 Pro]
+        J --> K[Google Gemini 2.5 Flash]
         K --> L[Pydantic JSON Parser]
         L -->|Structured Risk Score| G
     end
@@ -43,8 +43,8 @@ Designed strictly for Tier-1 financial compliance and Responsible AI principles:
 
 ## Stack Summary
 - **Backend Framework**: FastAPI (Strict typing, async, OpenAPI compatible)
-- **Generative AI Engine**: Google Vertex AI (Gemini 1.5 Pro) via LangChain
-- **Vector Search / RAG**: Vertex AI Vector Search (Using `text-embedding-004` embeddings) with fallback configurations
+- **Generative AI Engine**: Google Vertex AI (Gemini 2.5 Flash, configurable via `GEMINI_MODEL`) via LangChain
+- **Vector Search / RAG**: Vertex AI Vector Search (`text-embedding-004` embeddings) with document texts stored in GCS for retrieval
 - **Data Validation & Config**: Pydantic v2 BaseSettings
 - **Cloud Infrastructure**: Google Cloud Storage, Artifact Registry, and Google Cloud Run
 - **IaC & Automation**: Terraform (>= 1.3.0)
@@ -59,7 +59,7 @@ gcloud run deploy ro-fraud-service \
   --source . \
   --region us-central1 \
   --allow-unauthenticated \
-  --set-env-vars "GCP_PROJECT_ID=YOUR_PROJECT_ID,GCP_REGION=us-central1,GCS_BUCKET_NAME=YOUR_BUCKET_NAME,VERTEX_INDEX_ID=YOUR_INDEX_ID,VERTEX_ENDPOINT_ID=YOUR_ENDPOINT_ID"
+  --set-env-vars "GCP_PROJECT_ID=YOUR_PROJECT_ID,GCP_REGION=us-central1,GCS_BUCKET_NAME=YOUR_BUCKET_NAME,VERTEX_INDEX_ID=YOUR_INDEX_ID,VERTEX_ENDPOINT_ID=YOUR_ENDPOINT_ID,GEMINI_MODEL=gemini-2.5-flash"
 ```
 
 **See [`docs/DEPLOYMENT_GUIDE.md`](docs/DEPLOYMENT_GUIDE.md)** for the full step-by-step:
@@ -78,13 +78,14 @@ cp .env.example .env     # macOS/Linux
 copy .env.example .env   # Windows cmd
 ```
 
-| Variable             | Description                                  |
-| -------------------- | -------------------------------------------- |
-| `GCP_PROJECT_ID`     | Google Cloud project ID                      |
-| `GCP_REGION`         | Region (default `us-central1`)               |
-| `GCS_BUCKET_NAME`    | Bucket holding the embedding vectors         |
-| `VERTEX_INDEX_ID`    | Vertex AI Vector Search index ID             |
-| `VERTEX_ENDPOINT_ID` | Vertex AI Vector Search index endpoint ID    |
+| Variable             | Description                                                  |
+| -------------------- | ------------------------------------------------------------ |
+| `GCP_PROJECT_ID`     | Google Cloud project ID                                      |
+| `GCP_REGION`         | Region (default `us-central1`)                               |
+| `GCS_BUCKET_NAME`    | Bucket holding the embedding vectors and document texts      |
+| `VERTEX_INDEX_ID`    | Vertex AI Vector Search index ID                             |
+| `VERTEX_ENDPOINT_ID` | Vertex AI Vector Search index endpoint ID                    |
+| `GEMINI_MODEL`       | Gemini model name (default `gemini-2.5-flash`)               |
 
 > The real `.env` is gitignored and must never be committed. Only `.env.example`
 > (placeholders only) lives in the repo.

@@ -16,14 +16,17 @@ This document outlines cost optimization strategies for the RO-Fraud RAG system 
 - Consider **index refresh schedules** instead of real-time updates
 - Use **streaming endpoints** only when needed; otherwise use batch endpoints
 
-### 2. **Gemini 1.5 Pro (LLM Generation)**
-- **Input tokens**: ~$0.00125 per 1K tokens
-- **Output tokens**: ~$0.00375 per 1K tokens
+### 2. **Gemini 2.5 Flash (LLM Generation)**
+- **Input tokens**: ~$0.00015 per 1K tokens
+- **Output tokens**: ~$0.0006 per 1K tokens
+- Model is configurable via the `GEMINI_MODEL` env var. Flash is chosen as the
+  default for its low cost and low latency; switch to a Pro model for harder cases.
 
 **Optimization Strategies:**
+- **Model choice**: Gemini 2.5 Flash is ~10-20x cheaper than the older 1.5 Pro for this workload
 - **Prompt optimization**: Reduce unnecessary context in prompts
 - **Temperature=0.0**: Already implemented for deterministic, cost-effective responses
-- **Token limits**: Set max_output_tokens to prevent runaway generation
+- **Token limits**: `max_output_tokens=1024` is set to prevent runaway generation
 - **Caching**: Cache responses for identical claims (implement Redis/Memorystore)
 
 ### 3. **Cloud Run**
@@ -98,23 +101,27 @@ gcloud billing accounts set-billing-export \
 ### Low Traffic (1,000 requests/month)
 - Cloud Run: ~$0 (within free tier)
 - Vertex AI Vector Search: ~$360/month (deployed endpoint)
-- Gemini API: ~$5-10/month
+- Gemini API (2.5 Flash): ~$1-2/month
 - GCS + Artifact Registry: ~$5/month
-- **Total: ~$370-380/month**
+- **Total: ~$366-367/month** (dominated by the deployed Vector Search endpoint)
 
 ### Medium Traffic (50,000 requests/month)
 - Cloud Run: ~$20-30/month
 - Vertex AI Vector Search: ~$360/month + $5 queries
-- Gemini API: ~$200-300/month
+- Gemini API (2.5 Flash): ~$20-40/month
 - GCS + Artifact Registry: ~$10/month
-- **Total: ~$595-705/month**
+- **Total: ~$415-445/month**
 
 ### High Traffic (500,000 requests/month)
 - Cloud Run: ~$150-200/month
 - Vertex AI Vector Search: ~$360/month + $50 queries
-- Gemini API: ~$2,000-3,000/month
+- Gemini API (2.5 Flash): ~$200-400/month
 - GCS + Artifact Registry: ~$20/month
-- **Total: ~$2,580-3,630/month**
+- **Total: ~$780-1,030/month**
+
+> The deployed Vector Search endpoint is the dominant fixed cost at low/medium
+> traffic. Switching the LLM to Gemini 2.5 Flash keeps the variable (per-request)
+> cost low even at high volume.
 
 ## Cost Reduction Recommendations
 
@@ -131,7 +138,7 @@ gcloud billing accounts set-billing-export \
 4. ✅ Set up cost anomaly detection alerts
 
 ### Long-term (1-3 months)
-1. ✅ Evaluate **Gemini 1.5 Flash** for lower-cost alternative
+1. ✅ **Done** — using Gemini 2.5 Flash (low-cost, low-latency default)
 2. ✅ Consider **reserved capacity** for predictable workloads
 3. ✅ Implement **tiered service levels** (fast/standard/batch)
 4. ✅ Explore **model distillation** for simpler cases

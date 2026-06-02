@@ -103,7 +103,7 @@ async def analyze_claim_endpoint(request: ClaimRequest):
     **Process Flow:**
     1. Retrieve similar historical fraudulent claims from Vertex AI Vector Search
     2. Format current claim details with context
-    3. Generate risk assessment using Gemini 1.5 Pro
+    3. Generate risk assessment using Gemini (configurable, default Gemini 2.5 Flash)
     4. Return structured risk score with explainability
 
     **Returns:**
