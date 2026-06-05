@@ -54,7 +54,7 @@ logger = logging.getLogger(__name__)
 # Pre-built Vertex AI training container for Python 3.10 / CPU workloads.
 # See full list: https://cloud.google.com/vertex-ai/docs/training/pre-built-containers
 DEFAULT_TRAIN_IMAGE: str = (
-    "us-docker.pkg.dev/vertex-ai/training/scikit-learn-cpu.1-0:latest"
+    "us-docker.pkg.dev/vertex-ai/training/sklearn-cpu.1-0:latest"
 )
 
 EXPERIMENT_NAME: str = "credit-risk-experiment"
@@ -65,8 +65,8 @@ DISPLAY_NAME_HPT: str = "credit-risk-xgboost-hpt"
 MACHINE_TYPE: str = "n1-standard-4"
 
 # HPT configuration
-MAX_TRIAL_COUNT: int = 20
-PARALLEL_TRIAL_COUNT: int = 5
+MAX_TRIAL_COUNT: int = 6
+PARALLEL_TRIAL_COUNT: int = 3
 
 
 # ---------------------------------------------------------------------------
@@ -241,25 +241,25 @@ def submit_hpt_job(
     ]
 
     # ------------------------------------------------------------------
-    # 1. Define the worker pool — same container as the custom training job
+    # 1. Build the CustomJob using from_local_script (handles packaging)
     # ------------------------------------------------------------------
-    worker_pool_specs: list[dict] = [
-        {
-            "machine_spec": {"machine_type": MACHINE_TYPE},
-            "replica_count": 1,
-            "python_package_spec": {
-                "executor_image_uri": config["train_image"],
-                "package_uris": [
-                    # In production: upload a source dist to GCS and reference
-                    # it here, e.g. gs://bucket/packages/trainer-0.1.tar.gz
-                    # For this demo the staging bucket is used automatically
-                    # when script_path is provided via CustomTrainingJob.
-                ],
-                "python_module": "src.train",
-                "args": base_args,
-            },
-        }
-    ]
+    custom_job = aiplatform.CustomJob.from_local_script(
+        display_name=f"{DISPLAY_NAME_HPT}-trial",
+        script_path="src/train.py",
+        container_uri=config["train_image"],
+        args=base_args,
+        replica_count=1,
+        machine_type=MACHINE_TYPE,
+        requirements=[
+            "google-cloud-aiplatform==1.58.0",
+            "scikit-learn==1.4.2",
+            "xgboost==2.0.3",
+            "pandas==2.2.2",
+            "cloudml-hypertune==0.1.0.dev6",
+            "joblib==1.4.2",
+        ],
+        staging_bucket=f"gs://{config['bucket_name']}",
+    )
 
     # ------------------------------------------------------------------
     # 2. Define the hyperparameter search space
@@ -304,10 +304,7 @@ def submit_hpt_job(
     # ------------------------------------------------------------------
     hpt_job = aiplatform.HyperparameterTuningJob(
         display_name=DISPLAY_NAME_HPT,
-        custom_job=aiplatform.CustomJob(
-            display_name=f"{DISPLAY_NAME_HPT}-trial",
-            worker_pool_specs=worker_pool_specs,
-        ),
+        custom_job=custom_job,
         metric_spec=metric_spec,
         parameter_spec=parameter_spec,
         max_trial_count=MAX_TRIAL_COUNT,

@@ -243,8 +243,10 @@ def main() -> None:
 
     aiplatform.init(**init_kwargs)  # type: ignore[arg-type]
 
-    run_name: str = args.experiment_run or ""  # SDK auto-generates if blank
-    run_ctx = aiplatform.start_run(run=run_name) if run_name else aiplatform.start_run()
+    import uuid
+
+    run_name: str = args.experiment_run or f"run-{uuid.uuid4().hex[:8]}"
+    run_ctx = aiplatform.start_run(run=run_name)
     logger.info("Vertex AI Experiment run started: %s", run_ctx.name)
 
     # ------------------------------------------------------------------
