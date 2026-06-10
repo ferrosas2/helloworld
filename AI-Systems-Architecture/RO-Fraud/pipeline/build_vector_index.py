@@ -44,6 +44,41 @@ def load_raw_data() -> pd.DataFrame:
         {"claim_id": "C-1004", "raw_text": "Lost ring at beach. Ph: 555-999-0000.", "fraud_confirmed": False, "resolution_notes": "Approved after receipt and photo verification provided."},
         {"claim_id": "C-1005", "raw_text": "Stolen art piece, no police report filed. Contact: 555-111-2222.", "fraud_confirmed": True, "resolution_notes": "Repeat offender, identical claim filed 2 years ago across state lines."}
     ]
+
+    """
+    In a real pipeline i would ingest data from GCS using the client
+
+    storage_client = storage.Client(project=settings.GCP_PROJECT_ID)
+    bucket = storage_client.bucket(settings.GCS_BUCKET_NAME)
+    blob = bucket.blob(settings.RAW_DATA_BLOB)  # e.g. "raw/claims_export.csv"
+
+    content = blob.download_as_bytes()
+    df = pd.read_csv(io.BytesIO(content))  # swap for read_json if needed
+    return df
+
+    Or use the bigquery client
+
+    client = bigquery.Client(project=settings.GCP_PROJECT_ID)
+    
+    query = 
+        SELECT
+            claim_id,
+            raw_text,
+            fraud_confirmed,
+            resolution_notes
+        FROM `{project}.{dataset}.claims`
+        WHERE DATE(created_at) >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 YEAR)
+          AND resolution_notes IS NOT NULL
+    .format(
+        project=settings.GCP_PROJECT_ID,
+        dataset=settings.BQ_DATASET
+    )
+    
+    df = client.query(query).to_dataframe()
+    return df
+
+    """
+
     return pd.DataFrame(data)
 
 def clean_text_with_regex(text: str) -> str:
