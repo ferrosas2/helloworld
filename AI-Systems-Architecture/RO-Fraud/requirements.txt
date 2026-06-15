@@ -27,3 +27,8 @@ requests==2.31.0
 # pytest-cov==4.1.0
 # pytest-asyncio==0.23.4
 # httpx<0.28  # starlette 0.35.x TestClient is incompatible with httpx>=0.28 (removed the `app=` shortcut)
+
+# RAGAS evaluation (dev dependency — install separately)
+# pip install ragas==0.1.21 datasets==2.19.0
+# ragas==0.1.21
+# datasets==2.19.0
