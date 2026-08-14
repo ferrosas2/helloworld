@@ -6,6 +6,49 @@ This project demonstrates a production-grade, real-time fraud detection system f
 
 ## Architecture
 
+### The 30-Second Pitch
+
+```
+                        ┌─────────────────────────────────────────────────────┐
+                        │                 STREAMING PATH (~50–200ms)           │
+                        │                                                       │
+  POS Terminal          │   Dataflow Pipeline (Apache Beam)                    │
+  500K txns/day  ──────▶│   1. Parse & validate                                │
+        │               │   2. Redact PII (regex)              ┌─────────────┐ │
+        ▼               │   3. Compute features ──────────────▶│ Vertex AI   │─┼──▶ APPROVE ✅
+  Cloud Pub/Sub         │      • Amount / merchant risk        │ Fraud Score │ │
+  (ingestion buffer)    │      • Time-of-day signals           │  < 50ms     │─┼──▶ REVIEW  🔍
+        │               │      • 5-min velocity window         └─────────────┘ │
+        └──────────────▶│                                           │           │
+                        └───────────────────────────────────────────┼───────────┘
+                                                                     │ score ≥ 0.7
+                                                                     ▼
+                        ┌─────────────────────────────────────────────────────┐
+                        │              DEEP ANALYSIS PATH (~1–2s, async)       │
+                        │                                                       │
+                        │   Cloud Run (FastAPI)                                 │
+                        │   1. Embed transaction text                           │
+                        │   2. Vector Search → top-3 similar fraud cases       │──▶ FLAG 🚨
+                        │   3. Gemini 2.5 Flash → structured risk explanation  │   + analyst
+                        │                                                       │     report
+                        └─────────────────────────────────────────────────────┘
+
+                        ┌─────────────────────────────────────────────────────┐
+                        │              BATCH / ANALYTICS LAYER (nightly)       │
+                        │                                                       │
+                        │   BigQuery ◀── streaming inserts (all transactions)  │
+                        │       │                                               │
+                        │       ├─▶ BQML retrain fraud classifier (90d data)   │
+                        │       └─▶ ARIMA_PLUS anomaly detection (hourly)      │
+                        └─────────────────────────────────────────────────────┘
+```
+
+> **Key insight:** The fast path never waits for the LLM. Approve/block happens in ~50ms via Vertex AI. The RAG explanation runs asynchronously only for the ~5% of transactions that score ≥ 0.7 — giving analysts grounded, evidence-backed context without adding latency to the hot path.
+
+---
+
+### Detailed Architecture
+
 ```mermaid
 graph TD
     subgraph Ingestion Layer
