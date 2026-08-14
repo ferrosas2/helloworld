@@ -1,0 +1,45 @@
+# =============================================================================
+# Python Dependencies: Streaming Fraud Detection
+# =============================================================================
+# Core framework
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# Google Cloud SDK
+google-cloud-pubsub>=2.18.0
+google-cloud-bigquery>=3.12.0
+google-cloud-storage>=2.10.0
+google-cloud-aiplatform>=1.35.0
+google-api-core>=2.11.0
+
+# Apache Beam (Dataflow pipeline)
+apache-beam[gcp]>=2.50.0
+
+# LangChain (RAG deep analysis path)
+langchain>=0.1.0
+langchain-google-vertexai>=1.0.0
+langchain-core>=0.1.0
+
+# Vertex AI Embeddings & Vector Search
+google-cloud-aiplatform[all]>=1.35.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Redis (velocity feature store)
+redis>=5.0.0
+
+# Utilities
+python-dotenv>=1.0.0
+
+# =============================================================================
+# Development Dependencies (install separately for local dev)
+# =============================================================================
+# pytest>=7.4.0
+# pytest-cov>=4.1.0
+# pytest-asyncio>=0.21.0
+# httpx>=0.24.0  (for FastAPI TestClient)
+# trivy (security scanning - installed separately)
