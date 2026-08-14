@@ -28,6 +28,7 @@
 | I build systems that... | Example project |
 |---|---|
 | Detect fraud with grounded, auditable LLM output | [RO-Fraud RAG (GCP, live)](AI-Systems-Architecture/RO-Fraud) |
+| Score 500K+ daily transactions in under 200ms | [Streaming Fraud Detection (GCP)](AI-Systems-Architecture/streaming-fraud-detection) |
 | Stay up when models fail — circuit breakers, multi-region failover | [Resilient Financial AI Assistant](Cert-GenAI-Dev/Bonus_assignments/task_1_2) |
 | Cut GenAI cost by 90%+ without losing quality | [Insurance Claims: Nova vs Claude](Cert-GenAI-Dev/Bonus_assignments/task_1_1) |
 | Rank 100K+ items in under 50ms | [Two-Stage Ranking (XGBoost LTR)](recommendation_systems/two-stage-ranking) |
@@ -75,7 +76,23 @@ Production-grade RAG for fraud detection at a Tier-1 financial services client. 
 
 ---
 
-#### 2. Logistics & Fintech RAG Platform — `Prod-Ready`
+#### 2. Real-Time Streaming Fraud Detection — `Prod-Ready`
+**[`AI-Systems-Architecture/streaming-fraud-detection`](AI-Systems-Architecture/streaming-fraud-detection)**
+
+Production-grade streaming fraud detection for retail POS data. A dual-path architecture separates a fast approve/block path from an async explainability path — Vertex AI Online Prediction scores each transaction in ~50ms, while a Cloud Run RAG service provides grounded risk explanations for high-risk events via Vector Search and Gemini 2.5 Flash. BigQuery ML handles nightly model retraining without any data movement.
+
+| Metric | Result |
+|---|---|
+| Daily transaction throughput | **500K+** |
+| Scoring latency (fast path) | **< 200 ms** |
+| Estimated fraud loss reduction | **~40%** |
+| False positive rate | **< 0.1%** |
+
+**Stack:** Cloud Pub/Sub · Cloud Dataflow (Apache Beam) · Vertex AI Online Prediction · Vertex AI Vector Search · BigQuery ML · Gemini 2.5 Flash · Cloud Run · Terraform · Cloud Build
+
+---
+
+#### 3. Logistics & Fintech RAG Platform — `Prod-Ready`
 **[`AI-Systems-Architecture/RAG`](AI-Systems-Architecture/RAG)**
 
 Conversational analytics over unstructured freight and financial documents (Bills of Lading, Freight Claims). Emphasises deterministic output for financial compliance — zero-temperature generation, strict Pydantic schemas, explicit anti-hallucination guardrails.
@@ -84,7 +101,7 @@ Conversational analytics over unstructured freight and financial documents (Bill
 
 ---
 
-#### 3. Forecasting & Anomaly Engine — `Prod-Ready`
+#### 4. Forecasting & Anomaly Engine — `Prod-Ready`
 **[`AI-Systems-Architecture/forecasting-anomaly-engine`](AI-Systems-Architecture/forecasting-anomaly-engine)**
 
 Time-series forecasting and anomaly detection directly in the data warehouse using BigQuery ML. Zero-infrastructure MLOps: `ARIMA_PLUS` for forecasting, `ML.DETECT_ANOMALIES` for outliers, `ML.EXPLAIN_FORECAST` for XAI.
@@ -98,7 +115,7 @@ Time-series forecasting and anomaly detection directly in the data warehouse usi
 
 ---
 
-#### 4. Vertex Classic ML Pipeline — `Verified`
+#### 5. Vertex Classic ML Pipeline — `Verified`
 **[`GCP/credit_risk/vertex-classic-ml`](GCP/credit_risk/vertex-classic-ml)**
 
 Reference MLOps pattern for classic ML on Vertex AI: clean separation of orchestration (`submit_jobs.py`) and execution (`train.py`), Bayesian HPT via Vertex Vizier, full experiment lineage in Vertex AI Experiments, artefacts persisted to GCS. Verified end-to-end (June 2026).
@@ -109,7 +126,7 @@ Reference MLOps pattern for classic ML on Vertex AI: clean separation of orchest
 
 ### AWS · GenAI on Bedrock
 
-#### 5. Resilient Financial Services AI Assistant — `Prod-Ready`
+#### 6. Resilient Financial Services AI Assistant — `Prod-Ready`
 **[`Cert-GenAI-Dev/Bonus_assignments/task_1_2`](Cert-GenAI-Dev/Bonus_assignments/task_1_2)**
 
 Enterprise AI assistant for regulated industries. Dynamic model routing, circuit breakers, and graceful degradation deliver 100% availability under upstream failures. Multi-region failover under one minute.
@@ -124,7 +141,7 @@ Enterprise AI assistant for regulated industries. Dynamic model routing, circuit
 
 ---
 
-#### 6. Enterprise RAG with OpenSearch — `Prod-Ready`
+#### 7. Enterprise RAG with OpenSearch — `Prod-Ready`
 **[`Cert-GenAI-Dev/Bonus_assignments/task_1_4`](Cert-GenAI-Dev/Bonus_assignments/task_1_4)**
 
 Production RAG on Bedrock Knowledge Bases and OpenSearch Serverless. 50 subreddits indexed with 1536-dim Titan embeddings, semantic search, A/B testing, and automated cleanup.
@@ -139,7 +156,7 @@ Production RAG on Bedrock Knowledge Bases and OpenSearch Serverless. 50 subreddi
 
 ---
 
-#### 7. Insurance Claims GenAI — `POC`
+#### 8. Insurance Claims GenAI — `POC`
 **[`Cert-GenAI-Dev/Bonus_assignments/task_1_1`](Cert-GenAI-Dev/Bonus_assignments/task_1_1)**
 
 Automated extraction and summarisation of unstructured insurance claims. A rigorous model comparison drove the switch from Claude to Amazon Nova Micro.
@@ -154,7 +171,7 @@ Automated extraction and summarisation of unstructured insurance claims. A rigor
 
 ---
 
-#### 8. Advanced RAG for Historical Records — `Research`
+#### 9. Advanced RAG for Historical Records — `Research`
 **[`Cert-GenAI-Dev/Bonus_assignments/task_1_5`](Cert-GenAI-Dev/Bonus_assignments/task_1_5)**
 
 Multilingual RAG over Los Altos de Jalisco parish records (Spanish / Latin / Nahuatl). Hybrid keyword + semantic search, query decomposition, reranking, and entity extraction.
@@ -169,7 +186,7 @@ Multilingual RAG over Los Altos de Jalisco parish records (Spanish / Latin / Nah
 
 ---
 
-#### 9. Customer Feedback Analysis — `POC`
+#### 10. Customer Feedback Analysis — `POC`
 **[`Cert-GenAI-Dev/Bonus_assignments/task_1_3`](Cert-GenAI-Dev/Bonus_assignments/task_1_3)**
 
 Sentiment and topic extraction pipeline over customer feedback, with a model-selection strategy comparing foundation models by cost and quality.
@@ -178,7 +195,7 @@ Sentiment and topic extraction pipeline over customer feedback, with a model-sel
 
 ### Recommendation Systems
 
-#### 10. Two-Stage Ranking (LTR + XGBoost) — `Prod-Ready`
+#### 11. Two-Stage Ranking (LTR + XGBoost) — `Prod-Ready`
 **[`recommendation_systems/two-stage-ranking`](recommendation_systems/two-stage-ranking)**
 
 E-commerce recommender combining fast candidate retrieval with a Learning-to-Rank re-ranker. Optimises business metrics directly (margin, conversion), not just relevance.
@@ -191,7 +208,7 @@ E-commerce recommender combining fast candidate retrieval with a Learning-to-Ran
 
 **Stack:** XGBoost · BigQuery · SageMaker · Docker · Lambda
 
-#### 11. Two-Tower Retrieval Model
+#### 12. Two-Tower Retrieval Model
 **[`recommendation_systems/two-tower`](recommendation_systems/two-tower)**
 
 Deep-learning two-tower retrieval with ETL, training, and inference modules — the retrieval side of a modern recommender stack.
@@ -209,9 +226,10 @@ Deep-learning two-tower retrieval with ETL, training, and inference modules — 
 ```
 helloworld/
 ├── AI-Systems-Architecture/
-│   ├── RO-Fraud/                      # Live GCP RAG for fraud detection
-│   ├── RAG/                           # Logistics & fintech RAG platform
-│   └── forecasting-anomaly-engine/    # BigQuery ML forecasting + anomalies
+│   ├── RO-Fraud/                          # Live GCP RAG for fraud detection
+│   ├── streaming-fraud-detection/         # Real-time POS fraud detection (Dataflow + Vertex AI)
+│   ├── RAG/                               # Logistics & fintech RAG platform
+│   └── forecasting-anomaly-engine/        # BigQuery ML forecasting + anomalies
 ├── GCP/
 │   └── credit_risk/vertex-classic-ml/ # Vertex AI classic-ML MLOps pattern
 ├── Cert-GenAI-Dev/
