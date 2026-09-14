@@ -1,0 +1,49 @@
+# Normalize all text files to LF in the repository.
+# Git auto-detects text vs binary; text files are stored with LF
+# and checked out with LF on all platforms.
+* text=auto eol=lf
+
+# Explicit text types (belt and suspenders)
+*.py    text eol=lf
+*.js    text eol=lf
+*.ts    text eol=lf
+*.jsx   text eol=lf
+*.tsx   text eol=lf
+*.html  text eol=lf
+*.css   text eol=lf
+*.scss  text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+*.sql   text eol=lf
+*.sh    text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.tf    text eol=lf
+*.txt   text eol=lf
+*.ipynb text eol=lf
+*.csv   text eol=lf
+Dockerfile text eol=lf
+.gitignore text eol=lf
+.env.example text eol=lf
+
+# Binary files: never touch line endings
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.exe   binary
+*.zip   binary
+*.gz    binary
+*.parquet binary
+
+# Audio / video: must never be line-ending converted
+*.ogg   binary
+*.oga   binary
+*.webm  binary
+*.mp3   binary
+*.wav   binary
+*.m4a   binary
+*.mp4   binary
+*.mov   binary

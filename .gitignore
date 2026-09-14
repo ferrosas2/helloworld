@@ -65,8 +65,8 @@ build/
 dist/
 *.egg-info/
 
-# Ignore LFS pointers
-.gitattributes
+# Note: .gitattributes is intentionally tracked to enforce LF line endings
+# across platforms (prevents CRLF churn from cloud-synced/Windows editors).
 
 # Interview prep notes (LOCAL ONLY - never push to public repo)
 .interview-notes/
